@@ -200,7 +200,7 @@ public class TerraFirmaCraft
 		TFCPotion.setup();
 
 		//Register all of the recipes
-		TFC_OreDictionary.registerOreDict();
+		//TFC_OreDictionary.registerOreDict();
 		Recipes.registerRecipes();
 
 		ItemHeat.setupItemHeat();
