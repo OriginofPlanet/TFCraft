@@ -3,6 +3,7 @@ package com.bioxx.tfc.api;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 
+import com.bioxx.tfc.Blocks.Terrain.StoneType;
 import com.bioxx.tfc.api.Constant.Global;
 
 public class TFCBlocks 
@@ -65,6 +66,10 @@ public class TFCBlocks
 	public static int hopperRenderId;
 	public static int flowerPotRenderId;
 
+	public static StoneType stoneTypeIgIn;
+	public static StoneType stoneTypeIgEx;
+	public static StoneType stoneTypeSed;
+	public static StoneType stoneTypeMM;
 	public static Block stoneIgIn;
 	public static Block stoneIgEx;
 	public static Block stoneSed;

@@ -247,25 +247,34 @@ public class BlockSetup extends TFCBlocks
 		//Snow = (Block)Block.blockRegistry.getObject("snow_layer");
 		snow = new BlockCustomSnow().setHardness(0.1F).setStepSound(Block.soundTypeSnow).setBlockName("snow").setLightOpacity(0).setBlockTextureName("snow");
 		Blocks.snow_layer = snow;
-		stoneIgInCobble = new BlockIgInCobble(Material.rock).setHardness(16F).setBlockName("IgInRockCobble");
-		stoneIgIn = new BlockIgIn(Material.rock).setHardness(8F).setBlockName("IgInRock");
-		stoneIgInSmooth = new BlockIgInSmooth().setHardness(16F).setBlockName("IgInRockSmooth");
-		stoneIgInBrick = new BlockIgInBrick().setHardness(16F).setBlockName("IgInRockBrick");
+		
+		stoneTypeIgIn = StoneType.getType(Global.STONETYPE_IGIN).setStoneGemChance(2);
+		stoneTypeIgIn.registerBlocks();
+		stoneIgInCobble = stoneTypeIgIn.getCobble().setHardness(16F).setBlockName("IgInRockCobble");
+		stoneIgIn = stoneTypeIgIn.getStone().setHardness(8F).setBlockName("IgInRock");
+		stoneIgInSmooth = stoneTypeIgIn.getSmooth().setHardness(16F).setBlockName("IgInRockSmooth");
+		stoneIgInBrick = stoneTypeIgIn.getBrick().setHardness(16F).setBlockName("IgInRockBrick");
 
-		stoneSedCobble = new BlockSedCobble(Material.rock).setHardness(14F).setBlockName("SedRockCobble");
-		stoneSed = new BlockSed(Material.rock).setHardness(7F).setBlockName("SedRock");
-		stoneSedSmooth = new BlockSedSmooth().setHardness(14F).setBlockName("SedRockSmooth");
-		stoneSedBrick = new BlockSedBrick().setHardness(14F).setBlockName("SedRockBrick");
+		stoneTypeSed = StoneType.getType(Global.STONETYPE_SED).setCobbleTickRate(3).setStoneGemChance(1);
+		stoneTypeSed.registerBlocks();
+		stoneSedCobble = stoneTypeSed.getCobble().setHardness(14F).setBlockName("SedRockCobble");
+		stoneSed = stoneTypeSed.getStone().setHardness(7F).setBlockName("SedRock");
+		stoneSedSmooth = stoneTypeSed.getSmooth().setHardness(14F).setBlockName("SedRockSmooth");
+		stoneSedBrick = stoneTypeSed.getBrick().setHardness(14F).setBlockName("SedRockBrick");
 
-		stoneIgExCobble = new BlockIgExCobble(Material.rock).setHardness(16F).setBlockName("IgExRockCobble");
-		stoneIgEx = new BlockIgEx(Material.rock).setHardness(8F).setBlockName("IgExRock");
-		stoneIgExSmooth = new BlockIgExSmooth().setHardness(16F).setBlockName("IgExRockSmooth");
-		stoneIgExBrick = new BlockIgExBrick().setHardness(16F).setBlockName("IgExRockBrick");
+		stoneTypeIgEx = StoneType.getType(Global.STONETYPE_IGEX).setCobbleTickRate(3);
+		stoneTypeIgEx.registerBlocks();
+		stoneIgExCobble = stoneTypeIgEx.getCobble().setHardness(16F).setBlockName("IgExRockCobble");
+		stoneIgEx = stoneTypeIgEx.getStone().setHardness(8F).setBlockName("IgExRock");
+		stoneIgExSmooth = stoneTypeIgEx.getSmooth().setHardness(16F).setBlockName("IgExRockSmooth");
+		stoneIgExBrick = stoneTypeIgEx.getBrick().setHardness(16F).setBlockName("IgExRockBrick");
 
-		stoneMMCobble = new BlockMMCobble(Material.rock).setHardness(15F).setBlockName("MMRockCobble");
-		stoneMM = new BlockMM(Material.rock).setHardness(8F).setBlockName("MMRock");
-		stoneMMSmooth = new BlockMMSmooth().setHardness(15F).setBlockName("MMRockSmooth");
-		stoneMMBrick = new BlockMMBrick().setHardness(15F).setBlockName("MMRockBrick");
+		stoneTypeMM = StoneType.getType(Global.STONETYPE_MM).setStoneGemChance(3);
+		stoneTypeMM.registerBlocks();
+		stoneMMCobble = stoneTypeMM.getCobble().setHardness(15F).setBlockName("MMRockCobble");
+		stoneMM = stoneTypeMM.getStone().setHardness(8F).setBlockName("MMRock");
+		stoneMMSmooth = stoneTypeMM.getSmooth().setHardness(15F).setBlockName("MMRockSmooth");
+		stoneMMBrick = stoneTypeMM.getBrick().setHardness(15F).setBlockName("MMRockBrick");
 
 		dirt = new BlockDirt(0).setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("dirt");
 
@@ -347,22 +356,22 @@ public class BlockSetup extends TFCBlocks
 		foodPrep = new BlockFoodPrep().setHardness(1F).setBlockName("FoodPrep");
 		quern = new BlockQuern().setHardness(3F).setBlockName("Quern");
 
-		wallCobbleIgIn = new BlockCustomWall(stoneIgInCobble, 3).setBlockName("WallCobble");
-		wallCobbleIgEx = new BlockCustomWall(stoneIgExCobble, 4).setBlockName("WallCobble");
-		wallCobbleSed = new BlockCustomWall(stoneSedCobble, 8).setBlockName("WallCobble");
-		wallCobbleMM = new BlockCustomWall(stoneMMCobble, 6).setBlockName("WallCobble");
-		wallRawIgIn = new BlockCustomWall(stoneIgIn, 3).setBlockName("WallRaw");
-		wallRawIgEx = new BlockCustomWall(stoneIgEx, 4).setBlockName("WallRaw");
-		wallRawSed = new BlockCustomWall(stoneSed, 8).setBlockName("WallRaw");
-		wallRawMM = new BlockCustomWall(stoneMM, 6).setBlockName("WallRaw");
-		wallBrickIgIn = new BlockCustomWall(stoneIgInBrick, 3).setBlockName("WallBrick");
-		wallBrickIgEx = new BlockCustomWall(stoneIgExBrick, 4).setBlockName("WallBrick");
-		wallBrickSed = new BlockCustomWall(stoneSedBrick, 8).setBlockName("WallBrick");
-		wallBrickMM = new BlockCustomWall(stoneMMBrick, 6).setBlockName("WallBrick");
-		wallSmoothIgIn = new BlockCustomWall(stoneIgInSmooth, 3).setBlockName("WallSmooth");
-		wallSmoothIgEx = new BlockCustomWall(stoneIgExSmooth, 4).setBlockName("WallSmooth");
-		wallSmoothSed = new BlockCustomWall(stoneSedSmooth, 8).setBlockName("WallSmooth");
-		wallSmoothMM = new BlockCustomWall(stoneMMSmooth, 6).setBlockName("WallSmooth");
+		wallCobbleIgIn = stoneTypeIgIn.getWallCobble().setBlockName("WallCobble");
+		wallCobbleIgEx = stoneTypeIgEx.getWallCobble().setBlockName("WallCobble");
+		wallCobbleSed = stoneTypeSed.getWallCobble().setBlockName("WallCobble");
+		wallCobbleMM = stoneTypeMM.getWallCobble().setBlockName("WallCobble");
+		wallRawIgIn = stoneTypeIgIn.getWallStone().setBlockName("WallRaw");
+		wallRawIgEx = stoneTypeIgEx.getWallStone().setBlockName("WallRaw");
+		wallRawSed = stoneTypeSed.getWallStone().setBlockName("WallRaw");
+		wallRawMM = stoneTypeMM.getWallStone().setBlockName("WallRaw");
+		wallBrickIgIn = stoneTypeIgIn.getWallBrick().setBlockName("WallBrick");
+		wallBrickIgEx = stoneTypeIgEx.getWallBrick().setBlockName("WallBrick");
+		wallBrickSed = stoneTypeSed.getWallBrick().setBlockName("WallBrick");
+		wallBrickMM = stoneTypeMM.getWallBrick().setBlockName("WallBrick");
+		wallSmoothIgIn = stoneTypeIgIn.getWallSmooth().setBlockName("WallSmooth");
+		wallSmoothIgEx = stoneTypeIgEx.getWallSmooth().setBlockName("WallSmooth");
+		wallSmoothSed = stoneTypeSed.getWallSmooth().setBlockName("WallSmooth");
+		wallSmoothMM = stoneTypeMM.getWallSmooth().setBlockName("WallSmooth");
 
 		// Wooden Doors
 		for (int i=0; i < Global.WOOD_ALL.length; i++)

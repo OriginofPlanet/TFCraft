@@ -13,7 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-
+import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -22,19 +22,23 @@ import com.bioxx.tfc.Blocks.BlockTerra;
 import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.Items.Tools.ItemHammer;
 import com.bioxx.tfc.api.TFCItems;
+import com.bioxx.tfc.api.Constant.Global;
 import com.bioxx.tfc.api.Tools.IToolChisel;
 
 public class BlockCobble extends BlockTerra
 {
-	protected BlockCobble(Material material)
+	protected BlockCobble(StoneType stoneType, int tickRate)
 	{
-		super(material);
+		super(Material.rock);
 		this.setCreativeTab(TFCTabs.TFC_BUILDING);
+		this.stoneType = stoneType;
+		//SED = IGEX = 3, IGIN = MM = 10
+		this.tickRate = tickRate;
 	}
 
-	protected String[] names;
-	protected IIcon[] icons;
-	protected int looseStart;
+	private IIcon[] icons = new IIcon[8];
+	protected final int tickRate;
+	public final StoneType stoneType;
 
 	@SideOnly(Side.CLIENT)
 	@Override
@@ -43,8 +47,7 @@ public class BlockCobble extends BlockTerra
 	 */
 	public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List list)
 	{
-		for(int i = 0; i < names.length; i++)
-			list.add(new ItemStack(this,1,i));
+		stoneType.getVariants().forEach(sv -> list.add(new ItemStack(this, 1, sv.getLocalIndex())));
 	}
 
 	@Override
@@ -83,7 +86,7 @@ public class BlockCobble extends BlockTerra
 				if (metadata > 7)
 				{
 					// Need to take the "natural cobble" metadata mod 8 to get the correct rock item.
-					int meta = looseStart + (metadata % 8);
+					int meta = stoneType.get(metadata % 8).getGeneralIndex();
 					ret.add(new ItemStack(item, 1, meta));
 				}
 				else
@@ -126,8 +129,7 @@ public class BlockCobble extends BlockTerra
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegisterer)
 	{
-		for(int i = 0; i < names.length; i++)
-			icons[i] = iconRegisterer.registerIcon(Reference.MOD_ID + ":" + "rocks/"+names[i]+" Cobble");
+		stoneType.getVariants().forEach(sv -> {icons[sv.getLocalIndex()] = iconRegisterer.registerIcon(Reference.MOD_ID + ":" + "rocks/"+sv.getName()+" Cobble");});
 	}
 
 	@Override
@@ -179,71 +181,30 @@ public class BlockCobble extends BlockTerra
 
 			boolean canFallOneBelow = BlockCollapsible.canFallBelow(world, i, j-1, k);
 			byte count = 0;
-			List<Integer> sides = new ArrayList<Integer>();
+			List<ForgeDirection> sides = new ArrayList<>();
 
-			if(world.isAirBlock(i+1, j, k))
-			{
-				count++;
-				if(BlockCollapsible.canFallBelow(world, i+1, j-1, k))
-					sides.add(0);
-			}
-			if(world.isAirBlock(i, j, k+1))
-			{
-				count++;
-				if(BlockCollapsible.canFallBelow(world, i, j-1, k+1))
-					sides.add(1);
-			}
-			if(world.isAirBlock(i-1, j, k))
-			{
-				count++;
-				if(BlockCollapsible.canFallBelow(world, i-1, j-1, k))
-					sides.add(2);
-			}
-			if(world.isAirBlock(i, j, k-1))
-			{
-				count++;
-				if(BlockCollapsible.canFallBelow(world, i, j-1, k-1))
-					sides.add(3);
+			for (ForgeDirection dir : Global.SIDES) {
+				if (world.isAirBlock(i + dir.offsetX, j + dir.offsetY, k + dir.offsetZ)) {
+					count++;
+					if (BlockCollapsible.canFallBelow(world, i + dir.offsetX, j + dir.offsetY - 1, k + dir.offsetZ)) sides.add(dir);
+				}
 			}
 
-			if (!canFallOneBelow && count > 2 && !sides.isEmpty())
-			{
-				switch (sides.get(random.nextInt(sides.size())))
-				{
-				case 0:
-				{
-					world.setBlockToAir(i, j, k);
-					world.setBlock(i+1, j, k, this, meta, 0x2);
-					BlockCollapsible.tryToFall(world, i + 1, j, k, this);
-					break;
-				}
-				case 1:
-				{
-					world.setBlockToAir(i, j, k);
-					world.setBlock(i, j, k+1, this, meta, 0x2);
-					BlockCollapsible.tryToFall(world, i, j, k + 1, this);
-					break;
-				}
-				case 2:
-				{
-					world.setBlockToAir(i, j, k);
-					world.setBlock(i-1, j, k, this, meta, 0x2);
-					BlockCollapsible.tryToFall(world, i - 1, j, k, this);
-					break;
-				}
-				case 3:
-				{
-					world.setBlockToAir(i, j, k);
-					world.setBlock(i, j, k-1, this, meta, 0x2);
-					BlockCollapsible.tryToFall(world, i, j, k - 1, this);
-					break;
-				}
-				}
+			if (!canFallOneBelow && count > 2 && !sides.isEmpty()) {
+				ForgeDirection dir = sides.get(random.nextInt(sides.size()));
+				world.setBlockToAir(i, j, k);
+				world.setBlock(i + dir.offsetX, j + dir.offsetY, k + dir.offsetZ, this, meta, 0x2);
+				BlockCollapsible.tryToFall(world, i + dir.offsetX, j + dir.offsetY, k + dir.offsetZ, this);
 			}
 			else if(canFallOneBelow)
 			{
 				BlockCollapsible.tryToFall(world, i, j, k, this);
 			}
 		}
+	}
+
+	@Override
+	public int tickRate(World world) {
+		return tickRate;
 	}
 }
