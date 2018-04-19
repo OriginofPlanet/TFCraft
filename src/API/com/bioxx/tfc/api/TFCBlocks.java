@@ -87,6 +87,22 @@ public class TFCBlocks
 	public static Block stoneIgExSmooth;
 	public static Block stoneSedSmooth;
 	public static Block stoneMMSmooth;
+	public static Block wallCobbleIgIn;
+	public static Block wallCobbleIgEx;
+	public static Block wallCobbleSed;
+	public static Block wallCobbleMM;
+	public static Block wallRawIgIn;
+	public static Block wallRawIgEx;
+	public static Block wallRawSed;
+	public static Block wallRawMM;
+	public static Block wallBrickIgIn;
+	public static Block wallBrickIgEx;
+	public static Block wallBrickSed;
+	public static Block wallBrickMM;
+	public static Block wallSmoothIgIn;
+	public static Block wallSmoothIgEx;
+	public static Block wallSmoothSed;
+	public static Block wallSmoothMM;
 	public static Block ore;
 	public static Block ore2;
 	public static Block ore3;
@@ -117,12 +133,18 @@ public class TFCBlocks
 	public static Block clay2;
 	public static Block clayGrass;
 	public static Block clayGrass2;
+	public static Block tilledSoil;
+	public static Block tilledSoil2;
+	public static Block sand;
+	public static Block sand2;
+	public static Block dryGrass;
+	public static Block dryGrass2;
+	public static Block gravel;
+	public static Block gravel2;
 	public static Block peat;
 	public static Block peatGrass;
 	public static Block worldItem;
 	public static Block logPile;
-	public static Block tilledSoil;
-	public static Block tilledSoil2;
 	public static Block firepit;
 	public static Block bellows;
 	public static Block anvil;
@@ -137,10 +159,6 @@ public class TFCBlocks
 	public static Block stoneStairs;
 	public static Block stoneSlabs;
 	public static Block stoneStalac;
-	public static Block sand;
-	public static Block sand2;
-	public static Block dryGrass;
-	public static Block dryGrass2;
 	public static Block tallGrass;
 	public static Block charcoal;
 	public static Block detailed;
@@ -153,22 +171,6 @@ public class TFCBlocks
 	public static Block spawnMeter;
 	public static Block foodPrep;
 	public static Block quern;
-	public static Block wallCobbleIgIn;
-	public static Block wallCobbleIgEx;
-	public static Block wallCobbleSed;
-	public static Block wallCobbleMM;
-	public static Block wallRawIgIn;
-	public static Block wallRawIgEx;
-	public static Block wallRawSed;
-	public static Block wallRawMM;
-	public static Block wallBrickIgIn;
-	public static Block wallBrickIgEx;
-	public static Block wallBrickSed;
-	public static Block wallBrickMM;
-	public static Block wallSmoothIgIn;
-	public static Block wallSmoothIgEx;
-	public static Block wallSmoothSed;
-	public static Block wallSmoothMM;
 
 	public static Block[] doors = new Block[Global.WOOD_ALL.length];
 
@@ -233,9 +235,6 @@ public class TFCBlocks
 	public static Block buttonWood;
 	public static Block vine;
 	public static Block leatherRack;
-
-	public static Block gravel;
-	public static Block gravel2;
 
 	public static Block grill;
 	public static Block metalTrapDoor;

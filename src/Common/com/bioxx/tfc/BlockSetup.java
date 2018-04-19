@@ -257,6 +257,18 @@ public class BlockSetup extends TFCBlocks
 			st.getWallSmooth().setBlockName("WallSmooth");
 			st.getWallBrick().setBlockName("WallBrick");
 		});
+
+		dirts = new SoilType(BlockDirt.class, "Dirt").registerBlock((b, $) -> b.setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("dirt"));
+		clays = new SoilType(BlockClay.class, "Clay").registerBlock((b, $) -> b.setHardness(3F).setStepSound(Block.soundTypeGravel).setBlockName("clay"));
+		clayGrasses = new SoilType(BlockClayGrass.class, "ClayGrass").registerBlock((b, $) -> b.setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("ClayGrass"));
+		grasses = new SoilType(BlockGrass.class, "Grass").registerBlock((b, $) -> b.setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("Grass"));
+		peat = new BlockPeat().setHardness(3F).setStepSound(Block.soundTypeGravel).setBlockName("Peat");
+		peatGrass = new BlockPeatGrass().setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("PeatGrass");
+		dryGrasses = new SoilType(BlockDryGrass.class, "DryGrass").registerBlock((b, $) -> b.setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("DryGrass"));
+		tallGrass = new BlockCustomTallGrass().setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockName("TallGrass");
+		sands = new SoilType(BlockSand.class, "Sand").registerBlock((b, $) -> b.setHardness(0.5F).setStepSound(Block.soundTypeSand).setBlockName("sand"));
+		tilledSoils = new SoilType(BlockFarmland.class, "tilledSoil").registerBlock((b, i) -> ((BlockFarmland) b).setDirtBlock(dirts.getBlock(i)).setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("tilledSoil"));gravels = new SoilType(BlockGravel.class, "Gravel").registerBlock((b, $) -> b.setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("gravel"));
+
 		
 		stoneIgInCobble = stoneTypeIgIn.getCobble();
 		stoneIgIn = stoneTypeIgIn.getStone();
@@ -274,18 +286,22 @@ public class BlockSetup extends TFCBlocks
 		stoneMM = stoneTypeMM.getStone();
 		stoneMMSmooth = stoneTypeMM.getSmooth();
 		stoneMMBrick = stoneTypeMM.getBrick();
-
-		dirts = new SoilType(BlockDirt.class, "Dirt").registerBlock((b, $) -> b.setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("dirt"));
-		clays = new SoilType(BlockClay.class, "Clay").registerBlock((b, $) -> b.setHardness(3F).setStepSound(Block.soundTypeGravel).setBlockName("clay"));
-		clayGrasses = new SoilType(BlockClayGrass.class, "ClayGrass").registerBlock((b, $) -> b.setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("ClayGrass"));
-		grasses = new SoilType(BlockGrass.class, "Grass").registerBlock((b, $) -> b.setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("Grass"));
-		peat = new BlockPeat().setHardness(3F).setStepSound(Block.soundTypeGravel).setBlockName("Peat");
-		peatGrass = new BlockPeatGrass().setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("PeatGrass");
-		dryGrasses = new SoilType(BlockDryGrass.class, "DryGrass").registerBlock((b, $) -> b.setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("DryGrass"));
-		tallGrass = new BlockCustomTallGrass().setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockName("TallGrass");
-		sands = new SoilType(BlockSand.class, "Sand").registerBlock((b, $) -> b.setHardness(0.5F).setStepSound(Block.soundTypeSand).setBlockName("sand"));
-		tilledSoils = new SoilType(BlockFarmland.class, "tilledSoil").registerBlock((b, i) -> ((BlockFarmland) b).setDirtBlock(dirts.getBlock(i)).setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("tilledSoil"));gravels = new SoilType(BlockGravel.class, "Gravel").registerBlock((b, $) -> b.setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("gravel"));
-		
+		wallCobbleIgIn = stoneTypeIgIn.getWallCobble();
+		wallRawIgIn = stoneTypeIgIn.getWallStone();
+		wallSmoothIgIn = stoneTypeIgIn.getWallSmooth();
+		wallBrickIgEx = stoneTypeIgIn.getWallBrick();
+		wallCobbleSed = stoneTypeSed.getWallCobble();
+		wallRawSed = stoneTypeSed.getWallStone();
+		wallSmoothSed = stoneTypeSed.getWallSmooth();
+		wallBrickSed = stoneTypeSed.getWallBrick();
+		wallCobbleIgEx = stoneTypeIgEx.getWallCobble();
+		wallRawIgEx = stoneTypeIgEx.getWallStone();
+		wallSmoothIgEx = stoneTypeIgEx.getWallSmooth();
+		wallBrickIgEx = stoneTypeIgEx.getWallBrick();
+		wallCobbleMM = stoneTypeMM.getWallCobble();
+		wallRawMM = stoneTypeMM.getWallStone();
+		wallSmoothMM = stoneTypeMM.getWallSmooth();
+		wallBrickMM = stoneTypeMM.getWallBrick();
 		dirt = dirts.getBlockAt(0);
 		dirt2 = dirts.getBlockAt(1);
 		clay = clays.getBlockAt(0);

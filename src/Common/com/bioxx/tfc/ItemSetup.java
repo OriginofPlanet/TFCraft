@@ -726,7 +726,7 @@ public class ItemSetup extends TFCItems {
 				seedsOat,seedsOnion,seedsPotato,seedsRedBellPepper,seedsRice,seedsRye,seedsSoybean,seedsSquash,
 				seedsSugarcane,seedsTomato,seedsWheat,seedsYellowBellPepper};
 
-		((TFCTabs) TFCTabs.TFC_BUILDING).setTabIconItemStack(new ItemStack(TFCBlocks.stoneSedBrick));
+		((TFCTabs) TFCTabs.TFC_BUILDING).setTabIconItemStack(new ItemStack(TFCBlocks.stoneTypeSed.getBrick()));
 		((TFCTabs) TFCTabs.TFC_DECORATION).setTabIconItemStack(new ItemStack(TFCBlocks.flora));
 		((TFCTabs) TFCTabs.TFC_DEVICES).setTabIconItem(sluiceItem);
 		((TFCTabs) TFCTabs.TFC_POTTERY).setTabIconItemStack(new ItemStack(potteryJug, 1, 1));

@@ -414,7 +414,7 @@ public class TFC_Core
 	@Deprecated
 	public static boolean isGroundType1(Block block)
 	{
-		return isGrassType1(block) || block == dirt || block == gravel || block == sand;
+		return isGrassType1(block) || block == dirts.getBlockAt(0) || block == gravels.getBlockAt(0) || block == sands.getBlockAt(0);
 	}
 
 	public static boolean isSoilWAILA(Block block)
