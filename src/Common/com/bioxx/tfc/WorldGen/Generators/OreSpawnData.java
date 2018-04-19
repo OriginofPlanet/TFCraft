@@ -10,6 +10,8 @@ import net.minecraft.block.Block;
 import com.bioxx.tfc.TerraFirmaCraft;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.api.TFCBlocks;
+import com.bioxx.tfc.api.Blocks.StoneType;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
 import com.bioxx.tfc.api.Constant.Global;
 
 public class OreSpawnData
@@ -59,77 +61,18 @@ public class OreSpawnData
 	}
 
 	private void getOre(String name)
-	{		
-		for (int i = 0; i < Global.STONE_IGIN.length; i++){
-			if (name.equalsIgnoreCase(Global.STONE_IGIN[i]))
-			{
-				List<Integer> metadata = base.containsKey(TFCBlocks.stoneIgIn) ? base.get(TFCBlocks.stoneIgIn) : new ArrayList<Integer>();
-				metadata.add(i);
-				base.put(TFCBlocks.stoneIgIn, metadata);
+	{
+		for (StoneVariant sv : StoneVariant.getAllVariants()) {
+			if (name.equalsIgnoreCase(sv.getName())) {
+				base.computeIfAbsent(sv.getType().getStone(), ($) -> new ArrayList<>()).add(sv.getLocalIndex());
 				return;
 			}
 		}
-
-		for (int i = 0; i < Global.STONE_IGEX.length; i++)
-		{
-			if (name.equalsIgnoreCase(Global.STONE_IGEX[i]))
-			{
-				List<Integer> metadata = base.containsKey(TFCBlocks.stoneIgEx) ? base.get(TFCBlocks.stoneIgEx) : new ArrayList<Integer>();
-				metadata.add(i);
-				base.put(TFCBlocks.stoneIgEx, metadata);
+		for (StoneType st : StoneType.getAllTypes()) {
+			if (name.equalsIgnoreCase(st.getName())) {
+				base.computeIfAbsent(st.getStone(), ($) -> new ArrayList<>()).add(-1);
 				return;
 			}
-		}
-
-		for (int i = 0; i < Global.STONE_SED.length; i++)
-		{
-			if (name.equalsIgnoreCase(Global.STONE_SED[i]))
-			{
-				List<Integer> metadata = base.containsKey(TFCBlocks.stoneSed) ? base.get(TFCBlocks.stoneSed) : new ArrayList<Integer>();
-				metadata.add(i);
-				base.put(TFCBlocks.stoneSed, metadata);
-				return;
-			}
-		}
-
-		for (int i = 0; i < Global.STONE_MM.length; i++)
-		{
-			if (name.equalsIgnoreCase(Global.STONE_MM[i]))
-			{
-				List<Integer> metadata = base.containsKey(TFCBlocks.stoneMM) ? base.get(TFCBlocks.stoneMM) : new ArrayList<Integer>();
-				metadata.add(i);
-				base.put(TFCBlocks.stoneMM, metadata);
-				return;
-			}				
-		}
-		
-		if ("igneous intrusive".equalsIgnoreCase(name))
-		{
-			List<Integer> metadata = base.containsKey(TFCBlocks.stoneIgIn) ? base.get(TFCBlocks.stoneIgIn) : new ArrayList<Integer>();
-			metadata.add(-1);
-			base.put(TFCBlocks.stoneIgIn, metadata);
-			return;
-		}
-		else if ("igneous extrusive".equalsIgnoreCase(name))
-		{
-			List<Integer> metadata = base.containsKey(TFCBlocks.stoneIgEx) ? base.get(TFCBlocks.stoneIgEx) : new ArrayList<Integer>();
-			metadata.add(-1);
-			base.put(TFCBlocks.stoneIgEx, metadata);
-			return;
-		}
-		else if ("sedimentary".equalsIgnoreCase(name))
-		{
-			List<Integer> metadata = base.containsKey(TFCBlocks.stoneSed) ? base.get(TFCBlocks.stoneSed) : new ArrayList<Integer>();
-			metadata.add(-1);
-			base.put(TFCBlocks.stoneSed, metadata);
-			return;
-		}
-		else if ("metamorphic".equalsIgnoreCase(name))
-		{
-			List<Integer> metadata = base.containsKey(TFCBlocks.stoneMM) ? base.get(TFCBlocks.stoneMM) : new ArrayList<Integer>();
-			metadata.add(-1);
-			base.put(TFCBlocks.stoneMM, metadata);
-			return;
 		}
 	}
 }

@@ -197,7 +197,7 @@ public abstract class BlockCustomLiquid extends BlockDynamicLiquid implements IF
 		case Nether: return this == Blocks.soul_sand;
 		case Crop:   return TFC_Core.isFarmland(this);
 		case Cave:   return isSideSolid(world, x, y, z, ForgeDirection.UP);
-		case Plains: return this == TFCBlocks.grass || this == TFCBlocks.grass2 || this == TFCBlocks.dirt || this == TFCBlocks.dirt2;
+		case Plains: return TFC_Core.isGrassOrDirt(this);
 		case Water:  return world.getBlock(x, y, z).getMaterial() == Material.water && world.getBlockMetadata(x, y, z) == 0;
 		case Beach:
 			boolean isBeach = TFC_Core.isGround(this);
@@ -212,6 +212,7 @@ public abstract class BlockCustomLiquid extends BlockDynamicLiquid implements IF
 		return false;
 	}
 
+	//XXX Stone Block Enumeration
 	public void setBlockforLava(World world, int x, int y, int z, int typeOfLava)
 	{
 		DataLayer rockLayer3 = TFC_Climate.getCacheManager(world).getRockLayerAt(x, y, 2);
@@ -220,9 +221,9 @@ public abstract class BlockCustomLiquid extends BlockDynamicLiquid implements IF
 		Random rand = new Random();
 		boolean felsicLava = true;
 
-		if(this == TFCBlocks.stoneIgIn && (meta == 2 || meta == 1))
+		if(this == TFCBlocks.stoneTypeIgIn.getStone() && (meta == 2 || meta == 1))
 			felsicLava = false;
-		else if(this == TFCBlocks.stoneIgEx && (meta == 1 || meta == 2))
+		else if(this == TFCBlocks.stoneTypeIgEx.getStone() && (meta == 1 || meta == 2))
 			felsicLava = false;
 		if (typeOfLava == 0 || typeOfLava == 2) //non flowing rock
 		{
@@ -232,19 +233,19 @@ public abstract class BlockCustomLiquid extends BlockDynamicLiquid implements IF
 					world.setBlock(x, y, z, Blocks.obsidian);
 				else
 				{
-					world.setBlock(x, y, z, TFCBlocks.stoneIgEx);
+					world.setBlock(x, y, z, TFCBlocks.stoneTypeIgEx.getStone());
 					world.setBlockMetadataWithNotify(x, y, z, 0, 0);
 				}
 			}
 			else
 			{
-				world.setBlock(x, y, z, TFCBlocks.stoneIgEx);
+				world.setBlock(x, y, z, TFCBlocks.stoneTypeIgEx.getStone());
 				world.setBlockMetadataWithNotify(x, y, z, 1, 0);
 			}
 		}
 		else if (typeOfLava == 1)
 		{
-			world.setBlock(x, y, z, TFCBlocks.stoneIgExCobble);
+			world.setBlock(x, y, z, TFCBlocks.stoneTypeIgEx.getCobble());
 			if(felsicLava)
 				world.setBlockMetadataWithNotify(x, y, z, 0, 0);
 			else

@@ -37,6 +37,8 @@ import com.bioxx.tfc.Items.ItemGem;
 import com.bioxx.tfc.Items.ItemOre;
 import com.bioxx.tfc.TileEntities.*;
 import com.bioxx.tfc.api.*;
+import com.bioxx.tfc.api.Blocks.SoilType;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
 import com.bioxx.tfc.api.Constant.Global;
 import com.bioxx.tfc.api.Crafting.*;
 import com.bioxx.tfc.api.Enums.EnumFoodGroup;
@@ -1229,13 +1231,10 @@ public class WAILAData implements IWailaDataProvider
 	{
 		Block b = accessor.getBlock();
 		int dam = itemStack.getItemDamage();
-		if (b == TFCBlocks.dirt2 || b == TFCBlocks.sand2 || TFC_Core.isGrassType2(b) || b == TFCBlocks.gravel2)
-		{
-			dam += 16;
-		}
-
-		if (dam < Global.STONE_ALL.length)
-			currenttip.add(Global.STONE_ALL[dam]);
+		int index = SoilType.getIndexIfAnyMatch(b, TFCBlocks.dirts, TFCBlocks.sands, TFCBlocks.grasses, TFCBlocks.dryGrasses, TFCBlocks.clayGrasses, TFCBlocks.gravels);
+		StoneVariant sv = StoneVariant.get(dam + index * 16);
+		if (sv.isAvailable())
+			currenttip.add(sv.getName());
 		else
 			currenttip.add(EnumChatFormatting.DARK_RED + "Unknown");
 

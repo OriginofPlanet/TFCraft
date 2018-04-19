@@ -15,13 +15,21 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.bioxx.tfc.TerraFirmaCraft;
+import com.bioxx.tfc.Blocks.Terrain.BlockCollapsible;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.api.TFCOptions;
+import com.bioxx.tfc.api.Constant.Global;
 
 import static net.minecraftforge.common.util.ForgeDirection.UP;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public abstract class BlockTerra extends Block
 {
+	private boolean isCollapsible = false;
+
 	protected BlockTerra()
 	{
 		super(Material.rock);
@@ -30,6 +38,10 @@ public abstract class BlockTerra extends Block
 	protected BlockTerra(Material material)
 	{
 		super(material);
+	}
+
+	protected void setCollapsible(boolean isCollapsible) {
+		this.isCollapsible = isCollapsible;
 	}
 
 	@Override
@@ -100,6 +112,31 @@ public abstract class BlockTerra extends Block
 					world.getBlock(x,     y, z + 1).getMaterial() == Material.water;
 			return isBeach && hasWater;
 		default: return false;
+		}
+	}
+
+	@Override
+	public void updateTick(World world, int i, int j, int k, Random random) {
+		if (isCollapsible && !world.isRemote && world.doChunksNearChunkExist(i, j, k, 1) && !BlockCollapsible.isNearSupport(world, i, j, k, 4, 0)) {
+			int meta = world.getBlockMetadata(i, j, k);
+
+			boolean canFallOneBelow = BlockCollapsible.canFallBelow(world, i, j-1, k);
+			byte count = 0;
+			List<ForgeDirection> sides = new ArrayList<>();
+
+			for (ForgeDirection dir : Global.SIDES) if (world.isAirBlock(i + dir.offsetX, j + dir.offsetY, k + dir.offsetZ)) {
+				count++;
+				if (BlockCollapsible.canFallBelow(world, i + dir.offsetX, j + dir.offsetY - 1, k + dir.offsetZ)) sides.add(dir);
+			}
+
+			if (!canFallOneBelow && count > 2 && !sides.isEmpty()) {
+				ForgeDirection dir = sides.get(random.nextInt(sides.size()));
+				world.setBlockToAir(i, j, k);
+				world.setBlock(i + dir.offsetX, j + dir.offsetY, k + dir.offsetZ, this, meta, 0x2);
+				BlockCollapsible.tryToFall(world, i + dir.offsetX, j + dir.offsetY, k + dir.offsetZ, this);
+			} else if(canFallOneBelow) {
+				BlockCollapsible.tryToFall(world, i, j, k, this);
+			}
 		}
 	}
 }

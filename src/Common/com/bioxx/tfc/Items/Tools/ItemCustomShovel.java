@@ -19,9 +19,14 @@ public class ItemCustomShovel extends ItemTerraTool
 	{
 			Blocks.grass, Blocks.dirt, Blocks.sand, Blocks.gravel, Blocks.snow, Blocks.snow_layer,
 			Blocks.clay, Blocks.farmland, Blocks.soul_sand, Blocks.mycelium,
-			TFCBlocks.dirt, TFCBlocks.dirt2, TFCBlocks.grass, TFCBlocks.grass2, TFCBlocks.clayGrass,
-			TFCBlocks.clayGrass2, TFCBlocks.peatGrass, TFCBlocks.peat, TFCBlocks.clay, TFCBlocks.clay2
+			TFCBlocks.peatGrass, TFCBlocks.peat
 	});
+	{
+		BLOCKS_EFFECTIVE_AGAINST.addAll(TFCBlocks.dirts.getAllBlocks());
+		BLOCKS_EFFECTIVE_AGAINST.addAll(TFCBlocks.grasses.getAllBlocks());
+		BLOCKS_EFFECTIVE_AGAINST.addAll(TFCBlocks.clayGrasses.getAllBlocks());
+		BLOCKS_EFFECTIVE_AGAINST.addAll(TFCBlocks.clays.getAllBlocks());
+	}
 
 	public ItemCustomShovel(ToolMaterial par2EnumToolMaterial)
 	{

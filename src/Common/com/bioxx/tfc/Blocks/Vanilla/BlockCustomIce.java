@@ -117,7 +117,7 @@ public class BlockCustomIce extends BlockIce
 		case Nether: return this == Blocks.soul_sand;
 		case Crop:   return TFC_Core.isFarmland(this);
 		case Cave:   return isSideSolid(world, x, y, z, ForgeDirection.UP);
-		case Plains: return this == TFCBlocks.grass || this == TFCBlocks.grass2 || this == TFCBlocks.dirt || this == TFCBlocks.dirt2;
+		case Plains: return TFC_Core.isGrassOrDirt(this);
 		case Water:  return world.getBlock(x, y, z).getMaterial() == Material.water && world.getBlockMetadata(x, y, z) == 0;
 		case Beach:
 			boolean isBeach = TFC_Core.isDirt(this) || TFC_Core.isSand(this);

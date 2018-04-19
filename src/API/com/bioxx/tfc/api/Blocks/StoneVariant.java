@@ -1,8 +1,7 @@
-package com.bioxx.tfc.Blocks.Terrain;
+package com.bioxx.tfc.api.Blocks;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class StoneVariant {
@@ -17,6 +16,7 @@ public class StoneVariant {
 	private boolean isFlux = false;
 
 	private static StoneVariant[] variants = new StoneVariant[10];
+	private static int maxID = -1;
 	static {
 		Arrays.fill(variants, UNKOWN_VARIANT);
 	}
@@ -49,6 +49,7 @@ public class StoneVariant {
 		}
 		if (variants[index].isAvailable) throw new IllegalArgumentException("Index " + index + " is already registered");
 		variants[index] = element;
+		if (index > maxID) maxID = index;
 	}
 
 	public void setFlux(boolean isFlux) {
@@ -75,8 +76,13 @@ public class StoneVariant {
 		return isFlux;
 	}
 
+	public static StoneVariant get(String name) {
+		for (StoneVariant sv : variants) if (sv.name.equals(name)) return sv;
+		return UNKOWN_VARIANT;
+	}
+
 	public static StoneVariant get(int index) {
-		return Optional.ofNullable(index < 0 || index > variants.length ? null : variants[index]).orElse(UNKOWN_VARIANT);
+		return index < 0 || index >= variants.length ? UNKOWN_VARIANT : variants[index];
 	}
 
 	public static List<StoneVariant> getAllVariants() {
@@ -88,12 +94,7 @@ public class StoneVariant {
 	}
 
 	public static StoneVariant[] getVariants() {
-		for (int i = variants.length - 1; i >= 0; i--) {
-			if (variants[i] != null) {
-				return Arrays.copyOf(variants, i + 1);
-			}
-		}
-		return variants.clone();
+		return Arrays.copyOf(variants, maxID + 1);
 	}
 
 	public boolean isAvailable() {

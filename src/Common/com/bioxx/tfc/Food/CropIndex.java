@@ -128,10 +128,8 @@ public class CropIndex
 		//Block underFarmBlock = te.getWorldObj().getBlock(te.xCoord, te.yCoord-2, te.zCoord);
 		if(!TFC_Core.isSoil(farmBlock))
 		{
-			int soilType1 = (farmBlock == TFCBlocks.tilledSoil ? te.getWorldObj().getBlockMetadata(te.xCoord, te.yCoord-1, te.zCoord) : 
-				te.getWorldObj().getBlockMetadata(te.xCoord, te.yCoord-1, te.zCoord)+16);
-			int soilType2 = (farmBlock == TFCBlocks.dirt ? te.getWorldObj().getBlockMetadata(te.xCoord, te.yCoord-2, te.zCoord)*2 : 
-				farmBlock == TFCBlocks.dirt2 ? (te.getWorldObj().getBlockMetadata(te.xCoord, te.yCoord-2, te.zCoord)+16)*2 : 0);
+			int soilType1 = te.getWorldObj().getBlockMetadata(te.xCoord, te.yCoord-1, te.zCoord) + (TFCBlocks.tilledSoils.isInstance(farmBlock) ? TFCBlocks.tilledSoils.getIndex(farmBlock) * 16 : 0);
+			int soilType2 = TFCBlocks.dirts.isInstance(farmBlock) ? 2 * (16 * TFCBlocks.dirts.getIndex(farmBlock) + te.getWorldObj().getBlockMetadata(te.xCoord, te.yCoord-2, te.zCoord)) : 0;
 
 			int ph = TFC_Climate.getCacheManager(te.getWorldObj()).getPHLayerAt(te.xCoord, te.zCoord).data1*100;
 			int drainage = 0;

@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import com.bioxx.tfc.Core.TFC_Achievements;
 import com.bioxx.tfc.TileEntities.TEAnvil;
 import com.bioxx.tfc.api.TFCBlocks;
+import com.bioxx.tfc.api.Blocks.StoneType;
 import com.bioxx.tfc.api.Crafting.AnvilManager;
 import com.bioxx.tfc.api.Enums.EnumDamageType;
 import com.bioxx.tfc.api.Enums.EnumItemReach;
@@ -39,7 +40,7 @@ public class ItemHammer extends ItemTerraTool implements ICausesDamage
 		Block id2 = player.worldObj.getBlock(x, y, z);
 		int meta2 = player.worldObj.getBlockMetadata(x, y, z);
 
-		if(id2 == TFCBlocks.stoneIgEx || id2 == TFCBlocks.stoneIgIn)
+		if(StoneType.getAllTypes().stream().filter(StoneType::isAnvil).map(StoneType::getStone).anyMatch(b -> b == id2))
 		{
 			if(side == 1)
 			{

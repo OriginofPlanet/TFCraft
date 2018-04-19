@@ -19,9 +19,11 @@ import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Blocks.BlockTerra;
 import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.Items.Tools.ItemHammer;
+import com.bioxx.tfc.api.Blocks.IBlockStoneType;
+import com.bioxx.tfc.api.Blocks.StoneType;
 import com.bioxx.tfc.api.Tools.IToolChisel;
 
-public class BlockSmooth extends BlockTerra
+public class BlockSmooth extends BlockTerra implements IBlockStoneType
 {
 	protected BlockSmooth(StoneType stoneType)
 	{
@@ -86,5 +88,10 @@ public class BlockSmooth extends BlockTerra
 			return ((IToolChisel)entityplayer.getCurrentEquippedItem().getItem()).onUsed(world, entityplayer, x, y, z, id, meta, side, par7, par8, par9);
 		}
 		return false;
+	}
+
+	@Override
+	public StoneType getStoneType() {
+		return stoneType;
 	}
 }

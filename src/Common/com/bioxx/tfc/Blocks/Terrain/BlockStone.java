@@ -23,22 +23,28 @@ import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Items.Tools.ItemHammer;
 import com.bioxx.tfc.api.TFCItems;
+import com.bioxx.tfc.api.Blocks.IBlockStoneType;
+import com.bioxx.tfc.api.Blocks.StoneType;
 import com.bioxx.tfc.api.Tools.IToolChisel;
 
-public class BlockStone extends BlockCollapsible
+public class BlockStone extends BlockCollapsible implements IBlockStoneType
 {
-	protected BlockStone(StoneType stoneType, int gemChance)
+	protected BlockStone(StoneType stoneType)
 	{
 		super(Material.rock);
 		this.stoneType = stoneType;
 		this.dropBlock = stoneType.getCobble();
-		// MM = 3, IGEX = 0, IGIN = 2, SED = 1
-		this.gemChance = gemChance;
 	}
 
 	public IIcon[] icons = new IIcon[8];
-	protected int gemChance;
+	// MM = 3, IGEX = 0, IGIN = 2, SED = 1
+	protected int gemChance = 0;
 	public final StoneType stoneType;
+
+	public BlockStone setGemChance(int gemChance) {
+		this.gemChance = gemChance;
+		return this;
+	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
@@ -194,5 +200,10 @@ public class BlockStone extends BlockCollapsible
 				world.spawnEntityInWorld(item);
 			}
 		}
+	}
+
+	@Override
+	public StoneType getStoneType() {
+		return stoneType;
 	}
 }

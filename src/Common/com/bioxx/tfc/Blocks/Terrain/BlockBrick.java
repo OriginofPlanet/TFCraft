@@ -1,6 +1,7 @@
 package com.bioxx.tfc.Blocks.Terrain;
 
 import com.bioxx.tfc.Reference;
+import com.bioxx.tfc.api.Blocks.StoneType;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 

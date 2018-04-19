@@ -16,6 +16,7 @@ import com.bioxx.tfc.Render.Blocks.RenderCrop;
 import com.bioxx.tfc.Render.Blocks.RenderDetailed;
 import com.bioxx.tfc.Render.Blocks.RenderGrass;
 import com.bioxx.tfc.api.TFCBlocks;
+import com.bioxx.tfc.api.Blocks.SoilType;
 
 public class BlockRenderHandler implements ISimpleBlockRenderingHandler
 {
@@ -138,25 +139,21 @@ public class BlockRenderHandler implements ISimpleBlockRenderingHandler
 		}
 		else if (modelID == TFCBlocks.grassRenderId)
 		{
-			for(int i = 0; i < 6; i++)
-			{
-				if (block == TFCBlocks.dirt)
-					icons[i] = TFCBlocks.dirt.getBlockTextureFromSide(i);
-				else
-					icons[i] = TFCBlocks.dirt2.getBlockTextureFromSide(i);
+			int index = SoilType.getIndexIfAnyMatch(block, TFCBlocks.dirts, TFCBlocks.grasses, TFCBlocks.dryGrasses);
+			if (index >= 0) {
+				for(int i = 0; i < 6; i++)
+					icons[i] = TFCBlocks.dirts.getBlockAt(index).getBlockTextureFromSide(i);
+				renderInvBlock(block, renderer, icons);
 			}
-			renderInvBlock(block, renderer, icons);
 		}
 		else if (modelID == TFCBlocks.clayGrassRenderId)
 		{
-			for(int i = 0; i < 6; i++)
-			{
-				if (block == TFCBlocks.clay)
-					icons[i] = TFCBlocks.clay.getBlockTextureFromSide(i);
-				else
-					icons[i] = TFCBlocks.clay2.getBlockTextureFromSide(i);
+			int index = SoilType.getIndexIfAnyMatch(block, TFCBlocks.clays, TFCBlocks.clayGrasses);
+			if (index >= 0) {
+				for(int i = 0; i < 6; i++)
+					icons[i] = TFCBlocks.clays.getBlockAt(index).getBlockTextureFromSide(i);
+				renderInvBlock(block, renderer, icons);
 			}
-			renderInvBlock(block, renderer, icons);
 		}
 	}
 

@@ -21,6 +21,7 @@ import com.bioxx.tfc.Core.Metal.MetalRegistry;
 import com.bioxx.tfc.Food.*;
 import com.bioxx.tfc.Handlers.TFCFuelHandler;
 import com.bioxx.tfc.Items.*;
+import com.bioxx.tfc.Items.ItemBlocks.ItemFlatRock;
 import com.bioxx.tfc.Items.ItemBlocks.ItemWoodDoor;
 import com.bioxx.tfc.Items.Pottery.ItemPotteryBase;
 import com.bioxx.tfc.Items.Pottery.ItemPotteryJug;
@@ -491,8 +492,8 @@ public class ItemSetup extends TFCItems {
 		redSteelKnife = new ItemKnife(redSteelToolMaterial, 			250).setUnlocalizedName("Red Steel Knife").setMaxDamage(redSteelUses);
 		steelKnife = new ItemKnife(steelToolMaterial,					200).setUnlocalizedName("Steel Knife").setMaxDamage(steelUses);
 
-		flatRock = new ItemFlatGeneric().setFolder("rocks/flatrocks/").setMetaNames(Global.STONE_ALL).setUnlocalizedName("FlatRock");
-		looseRock = new ItemLooseRock().setSpecialCraftingType(flatRock).setFolder("rocks/").setMetaNames(Global.STONE_ALL).setUnlocalizedName("LooseRock");
+		flatRock = new ItemFlatRock().setFolder("rocks/flatrocks/").setUnlocalizedName("FlatRock");
+		looseRock = new ItemLooseRock().setSpecialCraftingType(flatRock).setFolder("rocks/").setUnlocalizedName("LooseRock");
 
 		igInStoneShovelHead = new ItemMiscToolHead(igInToolMaterial).setUnlocalizedName("IgIn Stone Shovel Head");
 		sedStoneShovelHead = new ItemMiscToolHead(sedToolMaterial).setUnlocalizedName("Sed Stone Shovel Head");

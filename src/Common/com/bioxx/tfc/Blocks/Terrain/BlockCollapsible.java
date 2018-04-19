@@ -312,7 +312,8 @@ public class BlockCollapsible extends BlockTerraContainer
 		}
 
 		//If we are in a soft sedimentary rock layer then we increase the chance of a collapse by 10%
-		if(this == TFCBlocks.stoneSed)
+		//XXX Stone Block Enumeration
+		if(this == TFCBlocks.stoneTypeSed.getStone())
 			finalCollapseRatio -= finalCollapseRatio * softModifier;
 
 		//First we check the rng to see if a collapse is going to occur

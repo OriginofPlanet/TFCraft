@@ -16,6 +16,7 @@ import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.Items.ItemBlocks.*;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCFluids;
+import com.bioxx.tfc.api.Blocks.*;
 import com.bioxx.tfc.api.Constant.Global;
 
 public class BlockSetup extends TFCBlocks
@@ -25,46 +26,32 @@ public class BlockSetup extends TFCBlocks
 		GameRegistry.registerBlock(ore, "Ore1");
 		GameRegistry.registerBlock(ore2, "Ore2");
 		GameRegistry.registerBlock(ore3, "Ore3");
-		GameRegistry.registerBlock(stoneIgIn, ItemStone.class, "StoneIgIn");
-		GameRegistry.registerBlock(stoneIgEx, ItemStone.class, "StoneIgEx");
-		GameRegistry.registerBlock(stoneSed, ItemStone.class, "StoneSed");
-		GameRegistry.registerBlock(stoneMM, ItemStone.class, "StoneMM");
+		StoneType.getAllTypes().forEach(st -> {
+			GameRegistry.registerBlock(st.getStone(), ItemStone.class, "Stone"+st.getAbbr());
+			GameRegistry.registerBlock(st.getCobble(), ItemStone.class, "Stone"+st.getAbbr()+"Cobble");
+			GameRegistry.registerBlock(st.getSmooth(), ItemStone.class, "Stone"+st.getAbbr()+"Smooth");
+			GameRegistry.registerBlock(st.getBrick(), ItemStone.class, "Stone"+st.getAbbr()+"Brick");
+			GameRegistry.registerBlock(st.getWallCobble(), ItemStone.class, "WallCobble"+st.getAbbr());
+			GameRegistry.registerBlock(st.getWallStone(), ItemStone.class, "WallRaw"+st.getAbbr());
+			GameRegistry.registerBlock(st.getWallBrick(), ItemStone.class, "WallBrick"+st.getAbbr());
+			GameRegistry.registerBlock(st.getWallSmooth(), ItemStone.class, "WallSmooth"+st.getAbbr());
+		});
 
-		GameRegistry.registerBlock(stoneIgInCobble, ItemStone.class, "StoneIgInCobble");
-		GameRegistry.registerBlock(stoneIgExCobble, ItemStone.class, "StoneIgExCobble");
-		GameRegistry.registerBlock(stoneSedCobble, ItemStone.class, "StoneSedCobble");
-		GameRegistry.registerBlock(stoneMMCobble, ItemStone.class, "StoneMMCobble");
-		GameRegistry.registerBlock(stoneIgInSmooth, ItemStone.class, "StoneIgInSmooth");
-		GameRegistry.registerBlock(stoneIgExSmooth, ItemStone.class, "StoneIgExSmooth");
-		GameRegistry.registerBlock(stoneSedSmooth, ItemStone.class, "StoneSedSmooth");
-		GameRegistry.registerBlock(stoneMMSmooth, ItemStone.class, "StoneMMSmooth");
-		GameRegistry.registerBlock(stoneIgInBrick, ItemStone.class, "StoneIgInBrick");
-		GameRegistry.registerBlock(stoneIgExBrick, ItemStone.class, "StoneIgExBrick");
-		GameRegistry.registerBlock(stoneSedBrick, ItemStone.class, "StoneSedBrick");
-		GameRegistry.registerBlock(stoneMMBrick, ItemStone.class, "StoneMMBrick");
+		SoilType.getAllSoilTypes().forEach(st -> {
+			int i = 1;
+			for (Block b : st.getAllBlocks()) {
+				GameRegistry.registerBlock(b, ItemSoil.class, i == 1 ? st.getName() : (st.getName() + i));
+				i++;
+			}
+		});
 
-		GameRegistry.registerBlock(dirt, ItemSoil.class, "Dirt");
-		GameRegistry.registerBlock(dirt2, ItemSoil.class, "Dirt2");
-		GameRegistry.registerBlock(sand, ItemSoil.class, "Sand");
-		GameRegistry.registerBlock(sand2, ItemSoil.class, "Sand2");
-		GameRegistry.registerBlock(clay, ItemSoil.class,"Clay");
-		GameRegistry.registerBlock(clay2, ItemSoil.class,"Clay2");
-		GameRegistry.registerBlock(grass, ItemSoil.class, "Grass");
-		GameRegistry.registerBlock(grass2, ItemSoil.class, "Grass2");
-		GameRegistry.registerBlock(clayGrass, ItemSoil.class, "ClayGrass");
-		GameRegistry.registerBlock(clayGrass2, ItemSoil.class, "ClayGrass2");
 		GameRegistry.registerBlock(peatGrass, ItemSoil.class, "PeatGrass");
 		GameRegistry.registerBlock(peat, ItemSoil.class, "Peat");
-		GameRegistry.registerBlock(dryGrass, ItemSoil.class, "DryGrass");
-		GameRegistry.registerBlock(dryGrass2, ItemSoil.class, "DryGrass2");
 		GameRegistry.registerBlock(tallGrass, ItemCustomTallGrass.class, "TallGrass");
 		GameRegistry.registerBlock(worldItem, "LooseRock");
 		GameRegistry.registerBlock(logPile, "LogPile");
 		GameRegistry.registerBlock(charcoal, "Charcoal");
 		GameRegistry.registerBlock(detailed, "Detailed");
-
-		GameRegistry.registerBlock(tilledSoil, ItemSoil.class, "tilledSoil");
-		GameRegistry.registerBlock(tilledSoil2, ItemSoil.class, "tilledSoil2");
 
 		GameRegistry.registerBlock(woodSupportV, ItemWoodSupport.class, "WoodSupportV");
 		GameRegistry.registerBlock(woodSupportH, ItemWoodSupport.class, "WoodSupportH");
@@ -112,22 +99,6 @@ public class BlockSetup extends TFCBlocks
 		GameRegistry.registerBlock(spawnMeter, ItemTerraBlock.class, "SpawnMeter");
 		GameRegistry.registerBlock(foodPrep, "FoodPrep");
 		GameRegistry.registerBlock(quern, ItemTerraBlock.class, "Quern");
-		GameRegistry.registerBlock(wallCobbleIgIn, ItemStone.class, "WallCobbleIgIn");
-		GameRegistry.registerBlock(wallCobbleIgEx, ItemStone.class, "WallCobbleIgEx");
-		GameRegistry.registerBlock(wallCobbleSed, ItemStone.class, "WallCobbleSed");
-		GameRegistry.registerBlock(wallCobbleMM, ItemStone.class, "WallCobbleMM");
-		GameRegistry.registerBlock(wallRawIgIn, ItemStone.class, "WallRawIgIn");
-		GameRegistry.registerBlock(wallRawIgEx, ItemStone.class, "WallRawIgEx");
-		GameRegistry.registerBlock(wallRawSed, ItemStone.class, "WallRawSed");
-		GameRegistry.registerBlock(wallRawMM, ItemStone.class, "WallRawMM");
-		GameRegistry.registerBlock(wallBrickIgIn, ItemStone.class, "WallBrickIgIn");
-		GameRegistry.registerBlock(wallBrickIgEx, ItemStone.class, "WallBrickIgEx");
-		GameRegistry.registerBlock(wallBrickSed, ItemStone.class, "WallBrickSed");
-		GameRegistry.registerBlock(wallBrickMM, ItemStone.class, "WallBrickMM");
-		GameRegistry.registerBlock(wallSmoothIgIn, ItemStone.class, "WallSmoothIgIn");
-		GameRegistry.registerBlock(wallSmoothIgEx, ItemStone.class, "WallSmoothIgEx");
-		GameRegistry.registerBlock(wallSmoothSed, ItemStone.class, "WallSmoothSed");
-		GameRegistry.registerBlock(wallSmoothMM, ItemStone.class, "WallSmoothMM");
 
 		GameRegistry.registerBlock(saltWater, "SaltWater");
 		GameRegistry.registerBlock(saltWaterStationary, "SaltWaterStationary");
@@ -183,8 +154,6 @@ public class BlockSetup extends TFCBlocks
 		GameRegistry.registerBlock(buttonWood, "ButtonWood");
 		GameRegistry.registerBlock(vine, ItemVine.class, "Vine");
 		GameRegistry.registerBlock(leatherRack, "LeatherRack");
-		GameRegistry.registerBlock(gravel, ItemSoil.class,"Gravel");
-		GameRegistry.registerBlock(gravel2, ItemSoil.class,"Gravel2");
 
 		GameRegistry.registerBlock(grill, ItemGrill.class, "Grill");
 		GameRegistry.registerBlock(metalTrapDoor, ItemMetalTrapDoor.class, "MetalTrapDoor");
@@ -248,50 +217,91 @@ public class BlockSetup extends TFCBlocks
 		snow = new BlockCustomSnow().setHardness(0.1F).setStepSound(Block.soundTypeSnow).setBlockName("snow").setLightOpacity(0).setBlockTextureName("snow");
 		Blocks.snow_layer = snow;
 		
-		stoneTypeIgIn = StoneType.getType(Global.STONETYPE_IGIN).setStoneGemChance(2);
-		stoneTypeIgIn.registerBlocks();
-		stoneIgInCobble = stoneTypeIgIn.getCobble().setHardness(16F).setBlockName("IgInRockCobble");
-		stoneIgIn = stoneTypeIgIn.getStone().setHardness(8F).setBlockName("IgInRock");
-		stoneIgInSmooth = stoneTypeIgIn.getSmooth().setHardness(16F).setBlockName("IgInRockSmooth");
-		stoneIgInBrick = stoneTypeIgIn.getBrick().setHardness(16F).setBlockName("IgInRockBrick");
+		stoneTypeIgIn = StoneType.getType(Global.STONETYPE_IGIN).setAbbr("IgIn").setAnvil(true).registerBlocks(BlockConstructor.INSTANCE, st -> {
+			st.getCobble().setHardness(16F).setBlockName("IgInRockCobble");
+			((BlockStone) st.getStone()).setGemChance(2).setHardness(8F).setBlockName("IgInRock");
+			st.getSmooth().setHardness(16F).setBlockName("IgInRockSmooth");
+			st.getBrick().setHardness(16F).setBlockName("IgInRockBrick");
+			st.getWallCobble().setBlockName("WallCobble");
+			st.getWallStone().setBlockName("WallRaw");
+			st.getWallSmooth().setBlockName("WallSmooth");
+			st.getWallBrick().setBlockName("WallBrick");
+		});
+		stoneTypeSed = StoneType.getType(Global.STONETYPE_SED).setAbbr("Sed").registerBlocks(BlockConstructor.INSTANCE, st -> {
+			((BlockCobble) st.getCobble()).setTickRate(3).setHardness(14F).setBlockName("SedRockCobble");
+			((BlockStone) st.getStone()).setGemChance(1).setHardness(7F).setBlockName("SedRock");
+			st.getSmooth().setHardness(14F).setBlockName("SedRockSmooth");
+			st.getBrick().setHardness(14F).setBlockName("SedRockBrick");
+			st.getWallCobble().setBlockName("WallCobble");
+			st.getWallStone().setBlockName("WallRaw");
+			st.getWallSmooth().setBlockName("WallSmooth");
+			st.getWallBrick().setBlockName("WallBrick");
+		});
+		stoneTypeIgEx = StoneType.getType(Global.STONETYPE_IGEX).setAbbr("IgEx").setAnvil(true).registerBlocks(BlockConstructor.INSTANCE, st -> {
+			((BlockCobble) st.getCobble()).setTickRate(3).setHardness(16F).setBlockName("IgExRockCobble");
+			st.getStone().setHardness(8F).setBlockName("IgExRock");
+			st.getSmooth().setHardness(16F).setBlockName("IgExRockSmooth");
+			st.getBrick().setHardness(16F).setBlockName("IgExRockBrick");
+			st.getWallCobble().setBlockName("WallCobble");
+			st.getWallStone().setBlockName("WallRaw");
+			st.getWallSmooth().setBlockName("WallSmooth");
+			st.getWallBrick().setBlockName("WallBrick");
+		});
+		stoneTypeMM = StoneType.getType(Global.STONETYPE_MM).setAbbr("MM").registerBlocks(BlockConstructor.INSTANCE, st -> {
+			st.getCobble().setHardness(15F).setBlockName("MMRockCobble");
+			((BlockStone) st.getStone()).setGemChance(3).setHardness(8F).setBlockName("MMRock");
+			st.getSmooth().setHardness(15F).setBlockName("MMRockSmooth");
+			st.getBrick().setHardness(15F).setBlockName("MMRockBrick");
+			st.getWallCobble().setBlockName("WallCobble");
+			st.getWallStone().setBlockName("WallRaw");
+			st.getWallSmooth().setBlockName("WallSmooth");
+			st.getWallBrick().setBlockName("WallBrick");
+		});
+		
+		stoneIgInCobble = stoneTypeIgIn.getCobble();
+		stoneIgIn = stoneTypeIgIn.getStone();
+		stoneIgInSmooth = stoneTypeIgIn.getSmooth();
+		stoneIgInBrick = stoneTypeIgIn.getBrick();
+		stoneSedCobble = stoneTypeSed.getCobble();
+		stoneSed = stoneTypeSed.getStone();
+		stoneSedSmooth = stoneTypeSed.getSmooth();
+		stoneSedBrick = stoneTypeSed.getBrick();
+		stoneIgExCobble = stoneTypeIgEx.getCobble();
+		stoneIgEx = stoneTypeIgEx.getStone();
+		stoneIgExSmooth = stoneTypeIgEx.getSmooth();
+		stoneIgExBrick = stoneTypeIgEx.getBrick();
+		stoneMMCobble = stoneTypeMM.getCobble();
+		stoneMM = stoneTypeMM.getStone();
+		stoneMMSmooth = stoneTypeMM.getSmooth();
+		stoneMMBrick = stoneTypeMM.getBrick();
 
-		stoneTypeSed = StoneType.getType(Global.STONETYPE_SED).setCobbleTickRate(3).setStoneGemChance(1);
-		stoneTypeSed.registerBlocks();
-		stoneSedCobble = stoneTypeSed.getCobble().setHardness(14F).setBlockName("SedRockCobble");
-		stoneSed = stoneTypeSed.getStone().setHardness(7F).setBlockName("SedRock");
-		stoneSedSmooth = stoneTypeSed.getSmooth().setHardness(14F).setBlockName("SedRockSmooth");
-		stoneSedBrick = stoneTypeSed.getBrick().setHardness(14F).setBlockName("SedRockBrick");
-
-		stoneTypeIgEx = StoneType.getType(Global.STONETYPE_IGEX).setCobbleTickRate(3);
-		stoneTypeIgEx.registerBlocks();
-		stoneIgExCobble = stoneTypeIgEx.getCobble().setHardness(16F).setBlockName("IgExRockCobble");
-		stoneIgEx = stoneTypeIgEx.getStone().setHardness(8F).setBlockName("IgExRock");
-		stoneIgExSmooth = stoneTypeIgEx.getSmooth().setHardness(16F).setBlockName("IgExRockSmooth");
-		stoneIgExBrick = stoneTypeIgEx.getBrick().setHardness(16F).setBlockName("IgExRockBrick");
-
-		stoneTypeMM = StoneType.getType(Global.STONETYPE_MM).setStoneGemChance(3);
-		stoneTypeMM.registerBlocks();
-		stoneMMCobble = stoneTypeMM.getCobble().setHardness(15F).setBlockName("MMRockCobble");
-		stoneMM = stoneTypeMM.getStone().setHardness(8F).setBlockName("MMRock");
-		stoneMMSmooth = stoneTypeMM.getSmooth().setHardness(15F).setBlockName("MMRockSmooth");
-		stoneMMBrick = stoneTypeMM.getBrick().setHardness(15F).setBlockName("MMRockBrick");
-
-		dirt = new BlockDirt(0).setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("dirt");
-
-		dirt2 = new BlockDirt(16).setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("dirt");
-		clay = new BlockClay(0).setHardness(3F).setStepSound(Block.soundTypeGravel).setBlockName("clay");
-		clay2 = new BlockClay(16).setHardness(3F).setStepSound(Block.soundTypeGravel).setBlockName("clay");
-		clayGrass = new BlockClayGrass(0).setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("ClayGrass");
-		clayGrass2 = new BlockClayGrass(16).setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("ClayGrass");
-		grass = new BlockGrass().setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("Grass");
-		grass2 = new BlockGrass(16).setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("Grass");
+		dirts = new SoilType(BlockDirt.class, "Dirt").registerBlock((b, $) -> b.setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("dirt"));
+		clays = new SoilType(BlockClay.class, "Clay").registerBlock((b, $) -> b.setHardness(3F).setStepSound(Block.soundTypeGravel).setBlockName("clay"));
+		clayGrasses = new SoilType(BlockClayGrass.class, "ClayGrass").registerBlock((b, $) -> b.setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("ClayGrass"));
+		grasses = new SoilType(BlockGrass.class, "Grass").registerBlock((b, $) -> b.setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("Grass"));
 		peat = new BlockPeat().setHardness(3F).setStepSound(Block.soundTypeGravel).setBlockName("Peat");
 		peatGrass = new BlockPeatGrass().setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("PeatGrass");
-		dryGrass = new BlockDryGrass(0).setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("DryGrass");
-		dryGrass2 =new BlockDryGrass(16).setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("DryGrass");
+		dryGrasses = new SoilType(BlockDryGrass.class, "DryGrass").registerBlock((b, $) -> b.setHardness(3F).setStepSound(Block.soundTypeGrass).setBlockName("DryGrass"));
 		tallGrass = new BlockCustomTallGrass().setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockName("TallGrass");
-		sand = new BlockSand(0).setHardness(0.5F).setStepSound(Block.soundTypeSand).setBlockName("sand");
-		sand2 = new BlockSand(16).setHardness(0.5F).setStepSound(Block.soundTypeSand).setBlockName("sand");
+		sands = new SoilType(BlockSand.class, "Sand").registerBlock((b, $) -> b.setHardness(0.5F).setStepSound(Block.soundTypeSand).setBlockName("sand"));
+		tilledSoils = new SoilType(BlockFarmland.class, "tilledSoil").registerBlock((b, i) -> ((BlockFarmland) b).setDirtBlock(dirts.getBlock(i)).setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("tilledSoil"));gravels = new SoilType(BlockGravel.class, "Gravel").registerBlock((b, $) -> b.setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("gravel"));
+		
+		dirt = dirts.getBlockAt(0);
+		dirt2 = dirts.getBlockAt(1);
+		clay = clays.getBlockAt(0);
+		clay2 = clays.getBlockAt(1);
+		clayGrass = clayGrasses.getBlockAt(0);
+		clayGrass2 = clayGrasses.getBlockAt(1);
+		grass = grasses.getBlockAt(0);
+		grass2 = grasses.getBlockAt(1);
+		dryGrass = dryGrasses.getBlockAt(0);
+		dryGrass2 = dryGrasses.getBlockAt(1);
+		sand = sands.getBlockAt(0);
+		sand2 = sands.getBlockAt(1);
+		tilledSoil = tilledSoils.getBlockAt(0);
+		tilledSoil2 = tilledSoils.getBlockAt(1);
+		gravel = gravels.getBlockAt(0);
+		gravel2 = gravels.getBlockAt(1);
 
 		ore = new BlockOre(Material.rock).setHardness(10F).setResistance(10F).setBlockName("Ore");
 		ore2 = new BlockOre2(Material.rock).setHardness(10F).setResistance(10F).setBlockName("Ore");
@@ -304,9 +314,6 @@ public class BlockSetup extends TFCBlocks
 		woodSupportH = new BlockWoodSupport(Material.wood).setBlockName("WoodSupportH").setHardness(0.5F).setResistance(1F);
 		woodSupportV2 = new BlockWoodSupport2(Material.wood).setBlockName("WoodSupportV2").setHardness(0.5F).setResistance(1F);
 		woodSupportH2 = new BlockWoodSupport2(Material.wood).setBlockName("WoodSupportH2").setHardness(0.5F).setResistance(1F);
-
-		tilledSoil = new BlockFarmland(TFCBlocks.dirt, 0).setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("tilledSoil");
-		tilledSoil2 = new BlockFarmland(TFCBlocks.dirt2, 16).setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("tilledSoil");
 
 		fruitTreeWood = new BlockFruitWood().setBlockName("fruitTreeWood").setHardness(5.5F).setResistance(2F);
 		fruitTreeLeaves = new BlockFruitLeaves(0).setBlockName("fruitTreeLeaves").setHardness(0.5F).setResistance(1F).setStepSound(Block.soundTypeGrass);
@@ -355,23 +362,6 @@ public class BlockSetup extends TFCBlocks
 		spawnMeter = new BlockSpawnMeter().setHardness(3F).setBlockName("SpawnMeter");
 		foodPrep = new BlockFoodPrep().setHardness(1F).setBlockName("FoodPrep");
 		quern = new BlockQuern().setHardness(3F).setBlockName("Quern");
-
-		wallCobbleIgIn = stoneTypeIgIn.getWallCobble().setBlockName("WallCobble");
-		wallCobbleIgEx = stoneTypeIgEx.getWallCobble().setBlockName("WallCobble");
-		wallCobbleSed = stoneTypeSed.getWallCobble().setBlockName("WallCobble");
-		wallCobbleMM = stoneTypeMM.getWallCobble().setBlockName("WallCobble");
-		wallRawIgIn = stoneTypeIgIn.getWallStone().setBlockName("WallRaw");
-		wallRawIgEx = stoneTypeIgEx.getWallStone().setBlockName("WallRaw");
-		wallRawSed = stoneTypeSed.getWallStone().setBlockName("WallRaw");
-		wallRawMM = stoneTypeMM.getWallStone().setBlockName("WallRaw");
-		wallBrickIgIn = stoneTypeIgIn.getWallBrick().setBlockName("WallBrick");
-		wallBrickIgEx = stoneTypeIgEx.getWallBrick().setBlockName("WallBrick");
-		wallBrickSed = stoneTypeSed.getWallBrick().setBlockName("WallBrick");
-		wallBrickMM = stoneTypeMM.getWallBrick().setBlockName("WallBrick");
-		wallSmoothIgIn = stoneTypeIgIn.getWallSmooth().setBlockName("WallSmooth");
-		wallSmoothIgEx = stoneTypeIgEx.getWallSmooth().setBlockName("WallSmooth");
-		wallSmoothSed = stoneTypeSed.getWallSmooth().setBlockName("WallSmooth");
-		wallSmoothMM = stoneTypeMM.getWallSmooth().setBlockName("WallSmooth");
 
 		// Wooden Doors
 		for (int i=0; i < Global.WOOD_ALL.length; i++)
@@ -425,9 +415,6 @@ public class BlockSetup extends TFCBlocks
 		metalSheet = new BlockMetalSheet().setBlockName("MetalSheet").setHardness(80);
 		leatherRack = new BlockLeatherRack().setBlockName("LeatherRack").setHardness(1);
 
-		gravel = new BlockGravel(0).setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("gravel");
-		gravel2 = new BlockGravel(16).setHardness(2F).setStepSound(Block.soundTypeGravel).setBlockName("gravel");
-
 		grill = new BlockGrill().setHardness(2F).setBlockName("Grill");
 		metalTrapDoor = new BlockMetalTrapDoor().setHardness(2F).setBlockName("MetalTrapDoor");
 		vessel = new BlockLargeVessel().setHardness(1F).setBlockName("Vessel");
@@ -438,36 +425,18 @@ public class BlockSetup extends TFCBlocks
 		hopper = new BlockHopper().setHardness(2F).setBlockName("Hopper");
 		flowerPot = new BlockCustomFlowerPot().setHardness(0.0F).setStepSound(Block.soundTypeStone).setBlockName("FlowerPot").setBlockTextureName("flower_pot");
 
-		stoneIgIn.setHarvestLevel("pickaxe", 0);
-		stoneIgEx.setHarvestLevel("pickaxe", 0);
-		stoneSed.setHarvestLevel("pickaxe", 0);
-		stoneMM.setHarvestLevel("pickaxe", 0);
+		StoneType.getAllTypes().forEach(st -> st.getStone().setHarvestLevel("pickaxe", 0));
 		stoneStalac.setHarvestLevel("pickaxe", 0);
 		detailed.setHarvestLevel("pickaxe", 0);
 		ore.setHarvestLevel("pickaxe", 1);
 		ore2.setHarvestLevel("pickaxe", 1);
 		ore3.setHarvestLevel("pickaxe", 1);
 
-		dirt.setHarvestLevel("shovel", 0);
-		dirt2.setHarvestLevel("shovel", 0);
-		grass.setHarvestLevel("shovel", 0);
-		grass2.setHarvestLevel("shovel", 0);
-		dryGrass.setHarvestLevel("shovel", 0);
-		dryGrass2.setHarvestLevel("shovel", 0);
-		clay.setHarvestLevel("shovel", 0);
-		clay2.setHarvestLevel("shovel", 0);
-		clayGrass.setHarvestLevel("shovel", 0);
-		clayGrass2.setHarvestLevel("shovel", 0);
+		SoilType.getAllSoilTypes().forEach(st -> st.getAllBlocks().forEach(b -> b.setHarvestLevel("shovel", 0)));
 		peat.setHarvestLevel("shovel", 0);
 		peatGrass.setHarvestLevel("shovel", 0);
-		sand.setHarvestLevel("shovel", 0);
-		sand2.setHarvestLevel("shovel", 0);
 		charcoal.setHarvestLevel("shovel", 0);
-		gravel.setHarvestLevel("shovel", 0);
-		gravel2.setHarvestLevel("shovel", 0);
 		waterPlant.setHarvestLevel("shovel", 0);
-		tilledSoil.setHarvestLevel("shovel", 0);
-		tilledSoil2.setHarvestLevel("shovel", 0);
 
 		detailed.setHarvestLevel("axe", 0);
 		Blocks.oak_stairs.setHarvestLevel("axe", 0);

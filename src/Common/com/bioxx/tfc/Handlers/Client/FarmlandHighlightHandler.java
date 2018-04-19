@@ -63,15 +63,13 @@ public class FarmlandHighlightHandler
 
 			Block b = world.getBlock(evt.target.blockX,evt.target.blockY,evt.target.blockZ);
 			int crop = 0;
-			if(b == TFCBlocks.crops && (
-					world.getBlock(evt.target.blockX, evt.target.blockY - 1, evt.target.blockZ) == TFCBlocks.tilledSoil ||
-					world.getBlock(evt.target.blockX, evt.target.blockY - 1, evt.target.blockZ) == TFCBlocks.tilledSoil2))
+			if(b == TFCBlocks.crops && TFCBlocks.tilledSoils.isInstance(world.getBlock(evt.target.blockX, evt.target.blockY - 1, evt.target.blockZ)))
 			{
-				b = TFCBlocks.tilledSoil;
+				b = TFCBlocks.tilledSoils.getBlockAt(0);
 				crop = 1;
 			}
 
-			if(b == TFCBlocks.tilledSoil || b == TFCBlocks.tilledSoil2)
+			if(TFCBlocks.tilledSoils.isInstance(b))
 			{
 				TEFarmland te = (TEFarmland) world.getTileEntity(evt.target.blockX, evt.target.blockY - crop, evt.target.blockZ);
 				te.requestNutrientData();
@@ -194,15 +192,13 @@ public class FarmlandHighlightHandler
 		{
 			Block b = world.getBlock(evt.target.blockX,evt.target.blockY,evt.target.blockZ);
 			int crop = 0;
-			if(b == TFCBlocks.crops && (
-					world.getBlock(evt.target.blockX,evt.target.blockY-1,evt.target.blockZ) == TFCBlocks.tilledSoil ||
-					world.getBlock(evt.target.blockX,evt.target.blockY-1,evt.target.blockZ) == TFCBlocks.tilledSoil2))
+			if(b == TFCBlocks.crops && TFCBlocks.tilledSoils.isInstance(world.getBlock(evt.target.blockX,evt.target.blockY-1,evt.target.blockZ)))
 			{
-				b = TFCBlocks.tilledSoil;
+				b = TFCBlocks.tilledSoils.getBlockAt(0);
 				crop = 1;
 			}
 
-			if(b == TFCBlocks.tilledSoil || b == TFCBlocks.tilledSoil2)
+			if(TFCBlocks.tilledSoils.isInstance(b))
 			{
 				boolean water = com.bioxx.tfc.Blocks.BlockFarmland.isFreshWaterNearby(world, evt.target.blockX, evt.target.blockY-crop, evt.target.blockZ);
 
@@ -232,9 +228,7 @@ public class FarmlandHighlightHandler
 		else if (evt.currentItem != null && evt.currentItem.getItem() instanceof ItemCustomHoe && hoeMode == 3)
 		{
 			Block b = world.getBlock(evt.target.blockX,evt.target.blockY,evt.target.blockZ);
-			if(b == TFCBlocks.crops && (
-					world.getBlock(evt.target.blockX,evt.target.blockY-1,evt.target.blockZ) == TFCBlocks.tilledSoil ||
-					world.getBlock(evt.target.blockX,evt.target.blockY-1,evt.target.blockZ) == TFCBlocks.tilledSoil2))
+			if(b == TFCBlocks.crops && TFCBlocks.tilledSoils.isInstance(world.getBlock(evt.target.blockX,evt.target.blockY-1,evt.target.blockZ)))
 			{
 				TECrop te = (TECrop) world.getTileEntity(evt.target.blockX, evt.target.blockY, evt.target.blockZ);
 				CropIndex index = CropManager.getInstance().getCropFromId(te.cropId);

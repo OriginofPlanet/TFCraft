@@ -20,7 +20,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -28,31 +27,37 @@ import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.TileEntities.TEFarmland;
+import com.bioxx.tfc.api.Blocks.IBlockSoil;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
 import com.bioxx.tfc.api.Constant.Global;
 
-public class BlockFarmland extends BlockContainer
+public class BlockFarmland extends BlockContainer implements IBlockSoil
 {
 	private Block dirtBlock;
-	private IIcon[] dirtTexture;
-	private int textureOffset;
+	private IIcon[] dirtTexture = new IIcon[16];
+	private int index;
 
-	public BlockFarmland(Block block, int tex)
+	public BlockFarmland(int index)
 	{
 		super(Material.ground);
 		this.setTickRandomly(true);
-		this.dirtBlock = block;
-		this.textureOffset = tex;
+		this.index = index;
 		this.setCreativeTab(TFCTabs.TFC_BUILDING);
+	}
+
+	public BlockFarmland setDirtBlock(Block dirtBlock) {
+		this.dirtBlock = dirtBlock;
+		return this;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister registerer)
 	{
-		int count = (textureOffset == 0 ? 16 : Global.STONE_ALL.length - 16);
-		dirtTexture = new IIcon[count];
-		for(int i = 0; i < count; i++)
-			dirtTexture[i] = registerer.registerIcon(Reference.MOD_ID + ":" + "farmland/Farmland " + Global.STONE_ALL[i + textureOffset]);
+		StoneVariant sv;
+		for (int i = 0; i < 16; i++) if ((sv = StoneVariant.get(i + index)).isAvailable()) {
+			dirtTexture[i] = registerer.registerIcon(Reference.MOD_ID + ":" + "farmland/Farmland " + sv.getName());
+		}
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -68,12 +73,9 @@ public class BlockFarmland extends BlockContainer
 
 		if(addToCreative)
 		{
-			int count;
-			if(textureOffset == 0) count = 16;
-			else count = Global.STONE_ALL.length - 16;
-
-			for(int i = 0; i < count; i++)
+			for (int i = 0; i < 16; i++) if (StoneVariant.get(i + index).isAvailable()) {
 				list.add(new ItemStack(item, 1, i));
+			}
 		}
 	}
 
@@ -202,5 +204,10 @@ public class BlockFarmland extends BlockContainer
 			return true;
 
 		return super.canSustainPlant(world, x, y, z, direction, plantable);
+	}
+
+	@Override
+	public int getStoneTypeIndex() {
+		return index;
 	}
 }

@@ -248,20 +248,21 @@ public class MapGenCavesTFC extends MapGenBaseTFC
 		{
 			DataLayer rockLayer1 = TFC_Climate.getCacheManager(world).getRockLayerAt((int)xCoord, (int)zCoord, 0);
 			Block layerID = rockLayer1.block;
-			if(layerID == TFCBlocks.stoneIgEx)
+			//XXX Stone Block Enumeration
+			if(layerID == TFCBlocks.stoneTypeIgEx.getStone())
 			{
 				width -= 0.4;
 			}
-			else if(layerID == TFCBlocks.stoneIgIn)
+			else if(layerID == TFCBlocks.stoneTypeIgIn.getStone())
 			{
 				width -= 0.5;
 			}
-			else if(layerID == TFCBlocks.stoneSed)
+			else if(layerID == TFCBlocks.stoneTypeSed.getStone())
 			{
 				width += 0.2;
 				var7 += 5;
 			}
-			else if(layerID == TFCBlocks.stoneMM)
+			else if(layerID == TFCBlocks.stoneTypeMM.getStone())
 			{
 				width += 0.3;
 			}

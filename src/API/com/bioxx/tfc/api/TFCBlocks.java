@@ -3,7 +3,8 @@ package com.bioxx.tfc.api;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 
-import com.bioxx.tfc.Blocks.Terrain.StoneType;
+import com.bioxx.tfc.api.Blocks.SoilType;
+import com.bioxx.tfc.api.Blocks.StoneType;
 import com.bioxx.tfc.api.Constant.Global;
 
 public class TFCBlocks 
@@ -100,6 +101,14 @@ public class TFCBlocks
 	public static Block woodSupportH;
 	public static Block woodSupportV2;
 	public static Block woodSupportH2;
+	public static SoilType dirts;
+	public static SoilType clays;
+	public static SoilType clayGrasses;
+	public static SoilType grasses;
+	public static SoilType dryGrasses;
+	public static SoilType sands;
+	public static SoilType tilledSoils;
+	public static SoilType gravels;
 	public static Block grass;
 	public static Block grass2;
 	public static Block dirt;

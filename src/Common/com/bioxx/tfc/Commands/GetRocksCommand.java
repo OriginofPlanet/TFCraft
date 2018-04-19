@@ -7,6 +7,7 @@ import net.minecraft.command.PlayerNotFoundException;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import com.bioxx.tfc.Core.TFC_Climate;
+import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Items.ItemLooseRock;
 import com.bioxx.tfc.WorldGen.DataLayer;
 import com.bioxx.tfc.api.TFCBlocks;
@@ -39,14 +40,7 @@ public class GetRocksCommand extends CommandBase
 
 	public static int getSoilMetaFromStone(Block inType, int inMeta)
 	{
-		if(inType == TFCBlocks.stoneIgIn)
-			return inMeta;
-		else if(inType == TFCBlocks.stoneSed)
-			return inMeta+3;
-		else if(inType == TFCBlocks.stoneIgEx)
-			return inMeta+11;
-		else
-			return inMeta+15;
+		return TFC_Core.getSoilMetaFromStone(inType, inMeta);
 	}
 
 	@Override

@@ -22,23 +22,30 @@ import com.bioxx.tfc.Blocks.BlockTerra;
 import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.Items.Tools.ItemHammer;
 import com.bioxx.tfc.api.TFCItems;
+import com.bioxx.tfc.api.Blocks.IBlockStoneType;
+import com.bioxx.tfc.api.Blocks.StoneType;
 import com.bioxx.tfc.api.Constant.Global;
 import com.bioxx.tfc.api.Tools.IToolChisel;
 
-public class BlockCobble extends BlockTerra
+public class BlockCobble extends BlockTerra implements IBlockStoneType
 {
-	protected BlockCobble(StoneType stoneType, int tickRate)
+	protected BlockCobble(StoneType stoneType)
 	{
 		super(Material.rock);
 		this.setCreativeTab(TFCTabs.TFC_BUILDING);
 		this.stoneType = stoneType;
-		//SED = IGEX = 3, IGIN = MM = 10
-		this.tickRate = tickRate;
+		this.setCollapsible(true);
 	}
 
 	private IIcon[] icons = new IIcon[8];
-	protected final int tickRate;
+	//SED = IGEX = 3, IGIN = MM = 10
+	protected int tickRate = 10;
 	public final StoneType stoneType;
+
+	public BlockCobble setTickRate(int tickRate) {
+		this.tickRate = tickRate;
+		return this;
+	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
@@ -173,38 +180,12 @@ public class BlockCobble extends BlockTerra
 	}
 
 	@Override
-	public void updateTick(World world, int i, int j, int k, Random random)
-	{
-		if (!world.isRemote && world.doChunksNearChunkExist(i, j, k, 1) && !BlockCollapsible.isNearSupport(world, i, j, k, 4, 0))
-		{
-			int meta = world.getBlockMetadata(i, j, k);
-
-			boolean canFallOneBelow = BlockCollapsible.canFallBelow(world, i, j-1, k);
-			byte count = 0;
-			List<ForgeDirection> sides = new ArrayList<>();
-
-			for (ForgeDirection dir : Global.SIDES) {
-				if (world.isAirBlock(i + dir.offsetX, j + dir.offsetY, k + dir.offsetZ)) {
-					count++;
-					if (BlockCollapsible.canFallBelow(world, i + dir.offsetX, j + dir.offsetY - 1, k + dir.offsetZ)) sides.add(dir);
-				}
-			}
-
-			if (!canFallOneBelow && count > 2 && !sides.isEmpty()) {
-				ForgeDirection dir = sides.get(random.nextInt(sides.size()));
-				world.setBlockToAir(i, j, k);
-				world.setBlock(i + dir.offsetX, j + dir.offsetY, k + dir.offsetZ, this, meta, 0x2);
-				BlockCollapsible.tryToFall(world, i + dir.offsetX, j + dir.offsetY, k + dir.offsetZ, this);
-			}
-			else if(canFallOneBelow)
-			{
-				BlockCollapsible.tryToFall(world, i, j, k, this);
-			}
-		}
+	public int tickRate(World world) {
+		return tickRate;
 	}
 
 	@Override
-	public int tickRate(World world) {
-		return tickRate;
+	public StoneType getStoneType() {
+		return stoneType;
 	}
 }

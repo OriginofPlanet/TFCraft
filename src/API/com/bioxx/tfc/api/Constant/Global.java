@@ -2,10 +2,10 @@ package com.bioxx.tfc.api.Constant;
 
 import java.util.Arrays;
 
-import com.bioxx.tfc.Blocks.Terrain.StoneType;
-import com.bioxx.tfc.Blocks.Terrain.StoneVariant;
 import com.bioxx.tfc.api.Metal;
 import com.bioxx.tfc.api.TFCOptions;
+import com.bioxx.tfc.api.Blocks.StoneType;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
 import com.google.common.collect.ObjectArrays;
 
 import net.minecraftforge.common.util.ForgeDirection;

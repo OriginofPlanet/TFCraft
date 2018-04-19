@@ -19,12 +19,13 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 import com.bioxx.tfc.TerraFirmaCraft;
-import com.bioxx.tfc.Blocks.Terrain.StoneType;
 import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCOptions;
+import com.bioxx.tfc.api.Blocks.IBlockStoneType;
+import com.bioxx.tfc.api.Blocks.StoneType;
 
-public class BlockCustomWall extends BlockWall
+public class BlockCustomWall extends BlockWall implements IBlockStoneType
 {
 	private Block block;
 	public final StoneType stoneType;
@@ -169,5 +170,10 @@ public class BlockCustomWall extends BlockWall
 	public boolean canBeReplacedByLeaves(IBlockAccess world, int x, int y, int z)
 	{
 		return false;
+	}
+
+	@Override
+	public StoneType getStoneType() {
+		return stoneType;
 	}
 }

@@ -17,18 +17,20 @@ import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Blocks.BlockTerra;
 import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.api.TFCItems;
+import com.bioxx.tfc.api.Blocks.IBlockSoil;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
 import com.bioxx.tfc.api.Constant.Global;
 
-public class BlockClay extends BlockTerra
+public class BlockClay extends BlockTerra implements IBlockSoil
 {
-	protected IIcon[] dirtTexture;
-	protected int textureOffset;
+	protected IIcon[] dirtTexture = new IIcon[16];
+	protected int index;
 
-	public BlockClay(int texOff)
+	public BlockClay(int index)
 	{
 		super(Material.clay);
 		this.setCreativeTab(TFCTabs.TFC_BUILDING);
-		textureOffset = texOff;
+		this.index = index;
 	}
 
 	@Override
@@ -39,22 +41,19 @@ public class BlockClay extends BlockTerra
 
 		if(addToCreative)
 		{
-			int count;
-			if(textureOffset == 0) count = 16;
-			else count = Global.STONE_ALL.length - 16;
-	
-			for(int i = 0; i < count; i++)
+			for (int i = 0; i < 16; i++) if (StoneVariant.get(i + index).isAvailable()) {
 				list.add(new ItemStack(item, 1, i));
+			}
 		}
 	}
 
 	@Override
 	public void registerBlockIcons(IIconRegister registerer)
 	{
-		int count = (textureOffset == 0 ? 16 : Global.STONE_ALL.length - 16);
-		dirtTexture = new IIcon[count];
-		for(int i = 0; i < count; i++)
-			dirtTexture[i] = registerer.registerIcon(Reference.MOD_ID + ":" + "clay/Clay " + Global.STONE_ALL[i + textureOffset]);
+		StoneVariant sv;
+		for (int i = 0; i < 16; i++) if ((sv = StoneVariant.get(i + index)).isAvailable()) {
+			dirtTexture[i] = registerer.registerIcon(Reference.MOD_ID + ":" + "clay/Clay " + sv.getName());
+		}
 	}
 
 	/**
@@ -145,4 +144,9 @@ public class BlockClay extends BlockTerra
 		else
 			par6ArrayList.add(AxisAlignedBB.getBoundingBoxFromPool(i, j, k,i + 1,j + 1,k +1));
 	}*/
+
+	@Override
+	public int getStoneTypeIndex() {
+		return index;
+	}
 }

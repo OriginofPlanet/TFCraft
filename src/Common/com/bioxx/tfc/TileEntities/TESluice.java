@@ -5,6 +5,7 @@ import java.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -246,9 +247,8 @@ public class TESluice extends TileEntity implements IInventory
 			for (Iterator iterator = list.iterator(); iterator.hasNext();)
 			{
 				EntityItem entity = (EntityItem)iterator.next();
-				Item item = entity.getEntityItem().getItem();
-				if(item == Item.getItemFromBlock(TFCBlocks.gravel)|| item == Item.getItemFromBlock(TFCBlocks.gravel2) || 
-						item == Item.getItemFromBlock(TFCBlocks.sand) || item == Item.getItemFromBlock(TFCBlocks.sand2))
+				Block itemBlock = Block.getBlockFromItem(entity.getEntityItem().getItem());
+				if (TFCBlocks.gravels.isInstance(itemBlock) || TFCBlocks.sands.isInstance(itemBlock))
 				{
 					int stackSize = entity.getEntityItem().stackSize;
 					int accept = (50 + 19 - soilAmount) / 20;
@@ -258,7 +258,7 @@ public class TESluice extends TileEntity implements IInventory
 						entity.setDead();
 						if(soilAmount > 50)
 							soilAmount = 50;
-						if(item == Item.getItemFromBlock(TFCBlocks.gravel)|| item == Item.getItemFromBlock(TFCBlocks.gravel2))
+						if(TFCBlocks.gravels.isInstance(itemBlock))
 							soilType = 2;
 						else
 							soilType = 1;

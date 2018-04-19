@@ -15,12 +15,12 @@ import net.minecraft.world.World;
 
 import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.TerraFirmaCraft;
-import com.bioxx.tfc.Blocks.Terrain.StoneType;
-import com.bioxx.tfc.Blocks.Terrain.StoneVariant;
 import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.Player.PlayerInfo;
 import com.bioxx.tfc.Core.Player.PlayerManagerTFC;
+import com.bioxx.tfc.api.Blocks.StoneType;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
 import com.bioxx.tfc.api.Constant.Global;
 
 public class ItemLooseRock extends ItemTerra
@@ -127,7 +127,7 @@ public class ItemLooseRock extends ItemTerra
 	@Override
 	public void registerIcons(IIconRegister registerer)
 	{
-		StoneVariant.getAllVariants().forEach(sv -> {icons[sv.getGeneralIndex()] = registerer.registerIcon(Reference.MOD_ID + ":" + "rocks/" + sv.getName() + " Rock");});
+		StoneVariant.getAllVariants().forEach(sv -> icons[sv.getGeneralIndex()] = registerer.registerIcon(Reference.MOD_ID + ":" + "rocks/" + sv.getName() + " Rock"));
 	}
 
 	@Override

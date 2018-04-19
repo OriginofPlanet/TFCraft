@@ -9,6 +9,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCItems;
+import com.bioxx.tfc.api.Blocks.StoneType;
 
 public class TFC_OreDictionary
 {
@@ -347,35 +348,23 @@ public class TFC_OreDictionary
 		OreDictionary.registerOre("gemCharcoal", new ItemStack(Items.coal, 1, 1));
 		OreDictionary.registerOre("gemCharcoal", new ItemStack(TFCItems.coal, 1, 1));
 
-		//Stone
-		OreDictionary.registerOre("stone", new ItemStack(TFCBlocks.stoneIgEx, 1, WILD));
-		OreDictionary.registerOre("stone", new ItemStack(TFCBlocks.stoneIgIn, 1, WILD));
-		OreDictionary.registerOre("stone", new ItemStack(TFCBlocks.stoneMM, 1, WILD));
-		OreDictionary.registerOre("stone", new ItemStack(TFCBlocks.stoneSed, 1, WILD));
-
-		//Cobblestone
-		OreDictionary.registerOre("cobblestone", new ItemStack(TFCBlocks.stoneIgExCobble, 1, WILD));
-		OreDictionary.registerOre("cobblestone", new ItemStack(TFCBlocks.stoneIgInCobble, 1, WILD));
-		OreDictionary.registerOre("cobblestone", new ItemStack(TFCBlocks.stoneMMCobble, 1, WILD));
-		OreDictionary.registerOre("cobblestone", new ItemStack(TFCBlocks.stoneSedCobble, 1, WILD));
-
-		OreDictionary.registerOre("stoneCobble", new ItemStack(TFCBlocks.stoneIgExCobble, 1, WILD));
-		OreDictionary.registerOre("stoneCobble", new ItemStack(TFCBlocks.stoneIgInCobble, 1, WILD));
-		OreDictionary.registerOre("stoneCobble", new ItemStack(TFCBlocks.stoneMMCobble, 1, WILD));
-		OreDictionary.registerOre("stoneCobble", new ItemStack(TFCBlocks.stoneSedCobble, 1, WILD));
+		StoneType.getAllTypes().forEach(st -> {
+			//Stone
+			OreDictionary.registerOre("stone", new ItemStack(st.getStone(), 1, WILD));
+			
+			//Cobblestone
+			OreDictionary.registerOre("cobblestone", new ItemStack(st.getCobble(), 1, WILD));
+			OreDictionary.registerOre("stoneCobble", new ItemStack(st.getCobble(), 1, WILD));
+			
+			//Stone Bricks
+			OreDictionary.registerOre("stoneBricks", new ItemStack(st.getBrick(), 1, WILD));
+			
+			//Smooth Stone
+			OreDictionary.registerOre("stoneSmooth", new ItemStack(st.getSmooth(), 1, WILD));
+			});
 
 		//Stone Bricks
 		OreDictionary.registerOre("stoneBricks", new ItemStack(Blocks.stonebrick));
-		OreDictionary.registerOre("stoneBricks", new ItemStack(TFCBlocks.stoneIgExBrick, 1, WILD));
-		OreDictionary.registerOre("stoneBricks", new ItemStack(TFCBlocks.stoneIgInBrick, 1, WILD));
-		OreDictionary.registerOre("stoneBricks", new ItemStack(TFCBlocks.stoneMMBrick, 1, WILD));
-		OreDictionary.registerOre("stoneBricks", new ItemStack(TFCBlocks.stoneSedBrick, 1, WILD));
-
-		//Smooth Stone
-		OreDictionary.registerOre("stoneSmooth", new ItemStack(TFCBlocks.stoneIgExSmooth, 1, WILD));
-		OreDictionary.registerOre("stoneSmooth", new ItemStack(TFCBlocks.stoneIgInSmooth, 1, WILD));
-		OreDictionary.registerOre("stoneSmooth", new ItemStack(TFCBlocks.stoneMMSmooth, 1, WILD));
-		OreDictionary.registerOre("stoneSmooth", new ItemStack(TFCBlocks.stoneSedSmooth, 1, WILD));
 
 		//Crafting Table
 		OreDictionary.registerOre("craftingTableWood", new ItemStack(TFCBlocks.workbench));
@@ -664,16 +653,13 @@ public class TFC_OreDictionary
 
 		//Miscellaneous Blocks
 		OreDictionary.registerOre("blockSand", new ItemStack(Blocks.sand));
-		OreDictionary.registerOre("blockSand", new ItemStack(TFCBlocks.sand, 1, WILD));
-		OreDictionary.registerOre("blockSand", new ItemStack(TFCBlocks.sand2, 1, WILD));
+		TFCBlocks.sands.getAllBlocks().forEach(b -> OreDictionary.registerOre("blockSand", new ItemStack(b, 1, WILD)));
 
 		OreDictionary.registerOre("blockGravel", new ItemStack(Blocks.gravel));
-		OreDictionary.registerOre("blockGravel", new ItemStack(TFCBlocks.gravel, 1, WILD));
-		OreDictionary.registerOre("blockGravel", new ItemStack(TFCBlocks.gravel2, 1, WILD));
+		TFCBlocks.gravels.getAllBlocks().forEach(b -> OreDictionary.registerOre("blockGravel", new ItemStack(b, 1, WILD)));
 
 		OreDictionary.registerOre("blockDirt", new ItemStack(Blocks.dirt));
-		OreDictionary.registerOre("blockDirt", new ItemStack(TFCBlocks.dirt, 1, WILD));
-		OreDictionary.registerOre("blockDirt", new ItemStack(TFCBlocks.dirt2, 1, WILD));
+		TFCBlocks.dirts.getAllBlocks().forEach(b -> OreDictionary.registerOre("blockDirt", new ItemStack(b, 1, WILD)));
 
 		OreDictionary.registerOre("blockTorch", new ItemStack(Blocks.torch));
 		OreDictionary.registerOre("blockTorch", new ItemStack(TFCBlocks.torch));
