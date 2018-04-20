@@ -64,10 +64,6 @@ public class StoneType {
 		return this;
 	}
 
-	public String getAbbr() {
-		return abbr;
-	}
-
 	public StoneType setAbbr(String abbr) {
 		this.abbr = abbr;
 		return this;
@@ -84,6 +80,14 @@ public class StoneType {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getAbbr() {
+		return abbr;
+	}
+
+	public String getUpperName() {
+		return Arrays.asList(name.split(" ")).stream().map(StoneType::upperCase).collect(Collectors.joining(" "));
 	}
 
 	public List<StoneVariant> getVariants() {
