@@ -25,6 +25,7 @@ import com.bioxx.tfc.TileEntities.TEFruitTreeWood;
 import com.bioxx.tfc.TileEntities.TEPartial;
 import com.bioxx.tfc.TileEntities.TEWaterPlant;
 import com.bioxx.tfc.WorldGen.DataLayer;
+import com.bioxx.tfc.WorldGen.WorldCacheManager;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCOptions;
 
@@ -277,7 +278,7 @@ public class TFC_CoreRender
 		//TFCWorldChunkManager wcm = ((TFCWorldChunkManager)w.getWorldChunkManager());
 		renderblocks.renderAllFaces = true;
 
-		DataLayer rockLayer1 = TFC_Climate.getCacheManager(w).getRockLayerAt(i, k, 0);
+		DataLayer rockLayer1 = TFC_Climate.getTopRockLayer(w, i, k);
 		if(rockLayer1 != null && rockLayer1.block != null && !breaking)
 			renderblocks.overrideBlockTexture = rockLayer1.block.getIcon(0, rockLayer1.data2);
 
@@ -325,7 +326,10 @@ public class TFC_CoreRender
 
 	public static IIcon getRockTexture(World world, int xCoord, int yCoord, int zCoord)
 	{
-		IIcon var27;
+		DataLayer[] rockLayers = TFC_Climate.getAllRockLayers(world, xCoord, zCoord);
+		DataLayer rockLayer = rockLayers[WorldCacheManager.getRockLayerIndex(yCoord)]; 
+		return rockLayer.block.getIcon(5, rockLayer.data2);
+		/*IIcon var27;
 		DataLayer rockLayer1 = TFC_Climate.getCacheManager(world).getRockLayerAt(xCoord, zCoord, 0);
 		DataLayer rockLayer2 = TFC_Climate.getCacheManager(world).getRockLayerAt(xCoord, zCoord, 1);
 		DataLayer rockLayer3 = TFC_Climate.getCacheManager(world).getRockLayerAt(xCoord, zCoord, 2);
@@ -336,7 +340,7 @@ public class TFC_CoreRender
 			var27 = rockLayer2.block.getIcon(5, rockLayer2.data2);
 		else
 			var27 = rockLayer1.block.getIcon(5, rockLayer1.data2);
-		return var27;
+		return var27;*/
 	}
 
 	public static boolean renderMolten(Block block, int i, int j, int k, RenderBlocks renderblocks)

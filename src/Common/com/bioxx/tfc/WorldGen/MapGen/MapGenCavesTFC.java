@@ -246,7 +246,7 @@ public class MapGenCavesTFC extends MapGenBaseTFC
 
 		if (TFC_Climate.getCacheManager(world) != null)
 		{
-			DataLayer rockLayer1 = TFC_Climate.getCacheManager(world).getRockLayerAt((int)xCoord, (int)zCoord, 0);
+			DataLayer rockLayer1 = TFC_Climate.getTopRockLayer(world, (int)xCoord, (int)zCoord);
 			Block layerID = rockLayer1.block;
 			//XXX Stone Block Enumeration
 			if(layerID == TFCBlocks.stoneTypeIgEx.getStone())

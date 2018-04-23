@@ -6,6 +6,9 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.PlayerNotFoundException;
 import net.minecraft.entity.player.EntityPlayerMP;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import com.bioxx.tfc.Core.TFC_Climate;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Items.ItemLooseRock;
@@ -27,15 +30,12 @@ public class GetRocksCommand extends CommandBase
 		//MinecraftServer var3 = MinecraftServer.getServer();
 		EntityPlayerMP var4 = getCommandSenderAsPlayer(sender);
 
-		DataLayer t0 = TFC_Climate.getRockLayer(var4.worldObj, (int)var4.posX, (int)var4.posY, (int)var4.posZ, 0);
-		DataLayer t1 = TFC_Climate.getRockLayer(var4.worldObj, (int)var4.posX, (int)var4.posY, (int)var4.posZ, 1);
-		DataLayer t2 = TFC_Climate.getRockLayer(var4.worldObj, (int)var4.posX, (int)var4.posY, (int)var4.posZ, 2);
+		DataLayer[] layers = TFC_Climate.getAllRockLayers(var4.worldObj, (int)var4.posX, (int)var4.posZ);
+		String format = Arrays.stream(layers).map(rl -> ((ItemLooseRock)TFCItems.looseRock).metaNames[rl.data1]).collect(Collectors.joining("   ", "Rock Layer %d: ", ""));
+		int[] index = new int[layers.length];
+		for (int i = 0; i < index.length; i++) index[i] = i + 1;
 
-		String t0s = ((ItemLooseRock)TFCItems.looseRock).metaNames[t0.data1];
-		String t1s = ((ItemLooseRock)TFCItems.looseRock).metaNames[t1.data1];
-		String t2s = ((ItemLooseRock)TFCItems.looseRock).metaNames[t2.data1];
-
-		throw new PlayerNotFoundException("Rock Layer 1: "+ t0s + "   Rock Layer 2: "+ t1s + "   Rock Layer 3: "+ t2s);
+		throw new PlayerNotFoundException(String.format(format, index));
 	}
 
 	public static int getSoilMetaFromStone(Block inType, int inMeta)

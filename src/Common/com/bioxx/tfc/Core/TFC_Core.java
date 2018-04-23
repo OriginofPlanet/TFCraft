@@ -55,6 +55,7 @@ import com.bioxx.tfc.Items.ItemTerra;
 import com.bioxx.tfc.Items.ItemBlocks.ItemTerraBlock;
 import com.bioxx.tfc.TileEntities.TEMetalSheet;
 import com.bioxx.tfc.WorldGen.TFCBiome;
+import com.bioxx.tfc.WorldGen.WorldCacheManager;
 import com.bioxx.tfc.api.*;
 import com.bioxx.tfc.api.Blocks.SoilType;
 import com.bioxx.tfc.api.Blocks.StoneType;
@@ -533,7 +534,7 @@ public class TFC_Core
 		return gravels.getBlock(inMeta);
 	}
 
-	public static int getRockLayerFromHeight(World world, int x, int y, int z)
+	public static int getRockLayerFromHeight(World world, int x, int y, int z)//TODO
 	{
 		ChunkData cd = TFC_Core.getCDM(world).getData(x >> 4, z >> 4);
 		if (cd != null)
@@ -542,12 +543,7 @@ public class TFC_Core
 			int localX = x & 15;
 			int localZ = z & 15;
 			int localY = localX + localZ * 16;
-			if (y <= TFCOptions.rockLayer3Height + hm[localY])
-				return 2;
-			else if (y <= TFCOptions.rockLayer2Height + hm[localY])
-				return 1;
-			else
-				return 0;
+			return WorldCacheManager.getRockLayerIndex(y - hm[localY]);
 		}
 		return 0;
 	}

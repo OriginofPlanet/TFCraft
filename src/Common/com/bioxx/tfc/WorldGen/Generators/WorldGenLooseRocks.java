@@ -41,7 +41,7 @@ public class WorldGenLooseRocks implements IWorldGenerator
 				}
 				else
 				{
-					DataLayer dl = TFC_Climate.getRockLayer(world, i, j, k, 0);
+					DataLayer dl = TFC_Climate.getTopRockLayer(world, i, k);
 					//BlockMeta rockLayer = new BlockMeta(dl.block, dl.data2);
 					te.storage[0] = new ItemStack(TFCItems.looseRock, 1, dl.data1);
 				}

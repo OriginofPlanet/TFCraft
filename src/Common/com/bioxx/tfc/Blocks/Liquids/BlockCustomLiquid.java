@@ -215,7 +215,7 @@ public abstract class BlockCustomLiquid extends BlockDynamicLiquid implements IF
 	//XXX Stone Block Enumeration
 	public void setBlockforLava(World world, int x, int y, int z, int typeOfLava)
 	{
-		DataLayer rockLayer3 = TFC_Climate.getCacheManager(world).getRockLayerAt(x, y, 2);
+		DataLayer rockLayer3 = TFC_Climate.getBottomRockLayer(world, x, z);
 		//int blockId = rockLayer3.data1;
 		int meta = rockLayer3.data2;
 		Random rand = new Random();

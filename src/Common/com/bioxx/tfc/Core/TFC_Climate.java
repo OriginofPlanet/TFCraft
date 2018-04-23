@@ -411,9 +411,20 @@ public class TFC_Climate
 		return getCacheManager(world).getTreeLayerAt(x, z, index).data1;
 	}
 
-	public static DataLayer getRockLayer(World world,int x, int y, int z, int index)
-	{
-		return getCacheManager(world).getRockLayerAt(x, z, index);
+	public static DataLayer getRockLayerAtHeight(World world, int x, int y, int z) {
+		return getCacheManager(world).getRockLayerAtHeight(world, x, y, z);
+	}
+
+	public static DataLayer getTopRockLayer(World world, int x, int z) {
+		return getCacheManager(world).getTopRockLayerAt(x, z);
+	}
+
+	public static DataLayer getBottomRockLayer(World world, int x, int z) {
+		return getCacheManager(world).getBottomRockLayerAt(x, z);
+	}
+
+	public static DataLayer[] getAllRockLayers(World world, int x, int z) {
+		return getCacheManager(world).getAllRockLayers(x, z);
 	}
 
 	public static int getMaxZPos()

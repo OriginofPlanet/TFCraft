@@ -34,7 +34,7 @@ public class WorldGenCustomSand extends WorldGenerator
 		}
 		else
 		{
-			DataLayer dl = TFC_Climate.getRockLayer(world, x, y, z, 0);
+			DataLayer dl = TFC_Climate.getTopRockLayer(world, x, z);
 			sandBlock = TFC_Core.getTypeForSand(dl.data1);
 			int var6 = par2Random.nextInt(this.radius - 2) + 2;
 			byte var7 = 2;

@@ -97,8 +97,4 @@ public class TFCOptions
 	public static byte[] anvilRuleColor0 = {(byte) 237, (byte) 28, (byte) 36, (byte) 255};
 	public static byte[] anvilRuleColor1 = {(byte) 242, (byte) 101, (byte) 34, (byte) 255};
 	public static byte[] anvilRuleColor2 = {(byte) 247, (byte) 148, (byte) 49, (byte) 255};
-
-	// Not actual options, could be moved to Global perhaps?
-	public static int rockLayer2Height = 110;
-	public static int rockLayer3Height = 55;
 }

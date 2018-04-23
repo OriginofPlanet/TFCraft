@@ -1,5 +1,6 @@
 package com.bioxx.tfc.WorldGen.Generators;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -117,12 +118,7 @@ public class WorldGenOre implements IWorldGenerator
 			{
 				for(int metadata : layers.get(b))
 				{
-					DataLayer rockLayer1 = TFC_Climate.getCacheManager(world).getRockLayerAt(chunkX, chunkZ, 0);
-					DataLayer rockLayer2 = TFC_Climate.getCacheManager(world).getRockLayerAt(chunkX, chunkZ, 1);
-					DataLayer rockLayer3 = TFC_Climate.getCacheManager(world).getRockLayerAt(chunkX, chunkZ, 2);
-					if (rockLayer1.block == b && (rockLayer1.data2 == metadata || metadata == -1) ||
-						rockLayer2.block == b && (rockLayer2.data2 == metadata || metadata == -1) ||
-						rockLayer3.block == b && (rockLayer3.data2 == metadata || metadata == -1))
+					if (Arrays.stream(TFC_Climate.getAllRockLayers(world, chunkX, chunkZ)).anyMatch(rl -> rl.block == b && (rl.data2 == metadata || metadata == -1)))
 					{
 						int grade = rand.nextInt(100);
 						if(grade<20)
@@ -150,12 +146,7 @@ public class WorldGenOre implements IWorldGenerator
 			{
 				for (int metadata : layers.get(b))
 				{
-					DataLayer rockLayer1 = TFC_Climate.getCacheManager(world).getRockLayerAt(chunkX, chunkZ, 0);
-					DataLayer rockLayer2 = TFC_Climate.getCacheManager(world).getRockLayerAt(chunkX, chunkZ, 1);
-					DataLayer rockLayer3 = TFC_Climate.getCacheManager(world).getRockLayerAt(chunkX, chunkZ, 2);
-					if (rockLayer1.block == b && (rockLayer1.data2 == metadata || metadata == -1) ||
-						rockLayer2.block == b && (rockLayer2.data2 == metadata || metadata == -1) ||
-						rockLayer3.block == b && (rockLayer3.data2 == metadata || metadata == -1))
+					if (Arrays.stream(TFC_Climate.getAllRockLayers(world, chunkX, chunkZ)).anyMatch(rl -> rl.block == b && (rl.data2 == metadata || metadata == -1)))
 					{
 						int grade = rand.nextInt(100);
 						if (grade < 20)

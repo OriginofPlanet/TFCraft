@@ -2,6 +2,8 @@ package com.bioxx.tfc.Handlers.Client;
 
 import java.awt.Color;
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -372,9 +374,7 @@ public class RenderOverlayHandler
 				event.left.add("Stability: " + TFC_Climate.getStability(mc.theWorld, xCoord, zCoord) + 
 								", Drainage: " + TFC_Climate.getCacheManager(mc.theWorld).getDrainageLayerAt(xCoord, zCoord).getName() +
 								", pH: " + TFC_Climate.getCacheManager(mc.theWorld).getPHLayerAt(xCoord, zCoord).getName());
-				event.left.add("Rock Layers: " + TFC_Climate.getCacheManager(mc.theWorld).getRockLayerAt(xCoord, zCoord, 0).getName() + ", " +
-								TFC_Climate.getCacheManager(mc.theWorld).getRockLayerAt(xCoord, zCoord, 1).getName() + ", " +
-								TFC_Climate.getCacheManager(mc.theWorld).getRockLayerAt(xCoord, zCoord, 2).getName());
+				event.left.add("Rock Layers: " + Arrays.stream(TFC_Climate.getAllRockLayers(mc.theWorld, xCoord, zCoord)).map(DataLayer::getName).collect(Collectors.joining(", ")));
 				event.left.add("Tree Layers: " + TFC_Climate.getCacheManager(mc.theWorld).getTreeLayerAt(xCoord, zCoord, 0).getName() + ", " +
 								TFC_Climate.getCacheManager(mc.theWorld).getTreeLayerAt(xCoord, zCoord, 1).getName() + ", " +
 								TFC_Climate.getCacheManager(mc.theWorld).getTreeLayerAt(xCoord, zCoord, 2).getName());

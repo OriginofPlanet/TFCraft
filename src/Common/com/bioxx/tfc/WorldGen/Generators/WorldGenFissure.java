@@ -115,7 +115,7 @@ public class WorldGenFissure implements IWorldGenerator
 		if(!TFC_Core.isGround(block))
 			return;
 
-		DataLayer dl = TFC_Climate.getRockLayer(world, x, y, z, 2);
+		DataLayer dl = TFC_Climate.getBottomRockLayer(world, x, z);
 		BlockMeta rockLayer = fillBlock != null ? new BlockMeta(dl.block, dl.data2) : new BlockMeta(Blocks.air, -1);
 		if(rockLayer.block == null)
 			return;
@@ -223,8 +223,8 @@ public class WorldGenFissure implements IWorldGenerator
 		final float incrementChance = 5f;
 		final float incrementChanceDiag = 2.5f;
 
-		DataLayer dl = TFC_Climate.getRockLayer(world, i, j, k, TFC_Core.getRockLayerFromHeight(world, i, j, k));
-		DataLayer dl2 = TFC_Climate.getRockLayer(world, i, j, k, 2);
+		DataLayer dl = TFC_Climate.getRockLayerAtHeight(world, i, j, k);
+		DataLayer dl2 = TFC_Climate.getBottomRockLayer(world, i, k);
 		BlockMeta rockLayer = fillBlock != null && fillBlock.getMaterial() == Material.lava ? 
 				new BlockMeta(dl2.block, dl2.data2) : new BlockMeta(dl.block, dl.data2);
 

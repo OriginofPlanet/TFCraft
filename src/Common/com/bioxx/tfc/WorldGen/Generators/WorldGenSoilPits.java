@@ -107,7 +107,7 @@ public class WorldGenSoilPits implements IWorldGenerator
 							Block block = world.getBlock(xCoord, yCoord, zCoord);
 							if (TFC_Climate.getCacheManager(world) != null)
 							{
-								DataLayer rockLayer1 = TFC_Climate.getCacheManager(world).getRockLayerAt(xCoord, zCoord, 0);
+								DataLayer rockLayer1 = TFC_Climate.getTopRockLayer(world, xCoord, zCoord);
 								if (TFC_Core.isDirt(block))
 								{
 									world.setBlock(xCoord, yCoord, zCoord, TFC_Core.getTypeForClay(block), TFC_Core.getSoilMetaFromStone(rockLayer1.block, rockLayer1.data2), 0x2);

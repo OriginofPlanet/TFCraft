@@ -58,7 +58,7 @@ public class BlockOre extends BlockCollapsible
 	public int[] getDropBlock(World world, int x, int y, int z)
 	{
 		int[] data = new int[]{ -1, -1 };
-		DataLayer dl = TFC_Climate.getCacheManager(world).getRockLayerAt(x, z, TFC_Core.getRockLayerFromHeight(world, x, y, z));
+		DataLayer dl = TFC_Climate.getRockLayerAtHeight(world, x, y, z);
 
 		if(dl != null)
 		{
