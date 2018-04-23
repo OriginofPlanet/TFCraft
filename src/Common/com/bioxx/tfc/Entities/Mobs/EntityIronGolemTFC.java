@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.TFC_MobData;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCItems;
@@ -54,12 +55,9 @@ public class EntityIronGolemTFC extends EntityIronGolem
 			Block block = this.worldObj.getBlock(x, y, z);
 			int meta = this.worldObj.getBlockMetadata(x, y, z);
 			// Fix for invisible grass texture
-			if(block == TFCBlocks.grass || block == TFCBlocks.grass2 ||
-					block == TFCBlocks.clayGrass || block == TFCBlocks.clayGrass2 ||
-					block == TFCBlocks.peatGrass ||
-					block == TFCBlocks.dryGrass || block == TFCBlocks.dryGrass2)
+			if(TFC_Core.isGrass(block))
 			{
-				block = TFCBlocks.dirt;
+				block = TFCBlocks.dirts.getBlockAt(0);
 				meta = 1;
 			}
 

@@ -25,6 +25,8 @@ import com.bioxx.tfc.TileEntities.TEBarrel;
 import com.bioxx.tfc.TileEntities.TELoom;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCItems;
+import com.bioxx.tfc.api.Blocks.StoneType;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
 import com.bioxx.tfc.api.Constant.Global;
 import com.bioxx.tfc.api.Crafting.*;
 import com.bioxx.tfc.api.Enums.RuleEnum;
@@ -133,8 +135,9 @@ public class Recipes
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(TFCItems.dye,1,12), new ItemStack(TFCItems.powder,1,8),new ItemStack(TFCItems.powder,1,0), "blockSand")); // Malachite, Flux & Sand - Light Blue
 
 		//Flux Powder
-		for (int i = 0; i < Global.STONE_FLUXINDEX.length; i++)
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(TFCItems.powder, 2, 0), new ItemStack(TFCItems.looseRock, 1, Global.STONE_FLUXINDEX[i]), "itemHammer"));
+		for (StoneVariant sv : StoneVariant.getAllVariants()) if (sv.isFlux()) {
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(TFCItems.powder, 2, 0), new ItemStack(TFCItems.looseRock, 1, sv.getGeneralIndex()), "itemHammer"));
+		}
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(TFCItems.powder, 6, 0), new ItemStack(TFCItems.oreChunk, 1, 32), "itemHammer"));
 
 		//Devices
@@ -212,91 +215,25 @@ public class Recipes
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(TFCItems.nametag, 1), new ItemStack(TFCItems.ink), new ItemStack(Items.paper, 1), "materialString"));
 
 		//Stone Stuff
-		for (int j = 0; j < Global.STONE_IGIN.length; j++)
-		{
+		for (StoneVariant sv : StoneVariant.getAllVariants()) {
 			//Bricks
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.stoneIgInBrick, 4, j), "PXP", "XPX", "PXP", 'P', new ItemStack(TFCItems.stoneBrick, 1, j + Global.STONE_IGIN_START), 'X', new ItemStack(TFCItems.mortar, 1));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(TFCItems.stoneBrick, 1, j + Global.STONE_IGIN_START), new ItemStack(TFCItems.looseRock, 1, j + Global.STONE_IGIN_START), "itemChisel"));
-
+			GameRegistry.addRecipe(new ItemStack(sv.getType().getBrick(), 4, sv.getLocalIndex()), "PXP", "XPX", "PXP", 'P', new ItemStack(TFCItems.stoneBrick, 1, sv.getGeneralIndex()), 'X', new ItemStack(TFCItems.mortar, 1));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(TFCItems.stoneBrick, 1, sv.getGeneralIndex()), new ItemStack(TFCItems.looseRock, 1, sv.getGeneralIndex()), "itemChisel"));
+			
 			// cobble <-> cobble block
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.stoneIgInCobble,1,j),
-					"PP","PP", 'P',new ItemStack(TFCItems.looseRock,1,j + Global.STONE_IGIN_START));
-			GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.looseRock,4,j + Global.STONE_IGIN_START),new ItemStack(TFCBlocks.stoneIgInCobble,1,j));
-
+			GameRegistry.addRecipe(new ItemStack(sv.getType().getCobble(), 1, sv.getLocalIndex()),
+					"PP","PP", 'P',new ItemStack(TFCItems.looseRock,1,sv.getGeneralIndex()));
+			GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.looseRock,4,sv.getGeneralIndex()),new ItemStack(sv.getType().getCobble(),1,sv.getGeneralIndex()));
+			
 			// walls
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallCobbleIgIn, 4, j),
-					"RRR", "RRR", 'R', new ItemStack(TFCItems.looseRock,1,j + Global.STONE_IGIN_START));
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallRawIgIn, 3, j),
-					"RRR", "RRR", 'R', new ItemStack(TFCBlocks.stoneIgIn,1,j));
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallBrickIgIn, 3, j),
-					"BMB", "MBM", 'B', new ItemStack(TFCItems.stoneBrick,1,j + Global.STONE_IGIN_START), 'M',new ItemStack(TFCItems.mortar,1));
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallSmoothIgIn, 3, j),
-					"RRR", "RRR", 'R', new ItemStack(TFCBlocks.stoneIgInSmooth,1,j));
-		}
-
-		for (int j = 0; j < Global.STONE_SED.length; j++)
-		{
-			//Bricks
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.stoneSedBrick, 4, j), "PXP", "XPX", "PXP", 'P', new ItemStack(TFCItems.stoneBrick, 1, j + Global.STONE_SED_START), 'X', new ItemStack(TFCItems.mortar, 1));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(TFCItems.stoneBrick, 1, j + Global.STONE_SED_START), new ItemStack(TFCItems.looseRock, 1, j + Global.STONE_SED_START), "itemChisel"));
-
-			// cobble <-> cobble block
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.stoneSedCobble,1,j),
-					"PP","PP", 'P',new ItemStack(TFCItems.looseRock,1,j + Global.STONE_SED_START));
-			GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.looseRock,4,j + Global.STONE_SED_START),new ItemStack(TFCBlocks.stoneSedCobble,1,j));
-
-			// walls
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallCobbleSed, 4, j),
-					"RRR", "RRR", 'R', new ItemStack(TFCItems.looseRock,1,j + Global.STONE_SED_START));
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallRawSed, 3, j),
-					"RRR", "RRR", 'R', new ItemStack(TFCBlocks.stoneSed,1,j));
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallBrickSed, 3, j),
-					"BMB", "MBM", 'B', new ItemStack(TFCItems.stoneBrick,1,j+Global.STONE_SED_START), 'M',new ItemStack(TFCItems.mortar,1));
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallSmoothSed, 3, j),
-					"RRR", "RRR", 'R', new ItemStack(TFCBlocks.stoneSedSmooth,1,j));
-		}
-
-		for (int j = 0; j < Global.STONE_IGEX.length; j++)
-		{
-			//Bricks
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.stoneIgExBrick, 4, j), "PXP", "XPX", "PXP", 'P', new ItemStack(TFCItems.stoneBrick, 1, j + Global.STONE_IGEX_START), 'X', new ItemStack(TFCItems.mortar, 1));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(TFCItems.stoneBrick, 1, j + Global.STONE_IGEX_START), new ItemStack(TFCItems.looseRock, 1, j + Global.STONE_IGEX_START), "itemChisel"));
-
-			// cobble <-> cobble block
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.stoneIgExCobble,1,j),
-					"PP","PP", 'P',new ItemStack(TFCItems.looseRock,1,j + Global.STONE_IGEX_START));
-			GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.looseRock,4,j + Global.STONE_IGEX_START),new ItemStack(TFCBlocks.stoneIgExCobble,1,j));
-
-			//walls
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallCobbleIgEx, 4, j),
-					"RRR", "RRR", 'R', new ItemStack(TFCItems.looseRock,1,j + Global.STONE_IGEX_START));
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallRawIgEx, 3, j),
-					"RRR", "RRR", 'R', new ItemStack(TFCBlocks.stoneIgEx,1,j));
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallBrickIgEx, 3, j),
-					"BMB", "MBM", 'B',new ItemStack(TFCItems.stoneBrick,1,j+Global.STONE_IGEX_START), 'M',new ItemStack(TFCItems.mortar,1));
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallSmoothIgEx, 3, j),
-					"RRR", "RRR", 'R', new ItemStack(TFCBlocks.stoneIgExSmooth,1,j));
-		}
-
-		for (int j = 0; j < Global.STONE_MM.length; j++)
-		{
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.stoneMMBrick, 4, j), "PXP", "XPX", "PXP", 'P', new ItemStack(TFCItems.stoneBrick, 1, j + Global.STONE_MM_START), 'X', new ItemStack(TFCItems.mortar, 1));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(TFCItems.stoneBrick, 1, j + Global.STONE_MM_START), new ItemStack(TFCItems.looseRock, 1, j + Global.STONE_MM_START), "itemChisel"));
-
-			// cobble <-> cobble block
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.stoneMMCobble,1,j),
-					"PP","PP", 'P',new ItemStack(TFCItems.looseRock,1,j + Global.STONE_MM_START));
-			GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.looseRock,4,j + Global.STONE_MM_START),new ItemStack(TFCBlocks.stoneMMCobble,1,j));
-
-			//walls
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallCobbleMM, 4, j),
-					"RRR", "RRR", 'R', new ItemStack(TFCItems.looseRock,1,j + Global.STONE_MM_START));
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallRawMM, 3, j),
-					"RRR", "RRR", 'R', new ItemStack(TFCBlocks.stoneMM,1,j));
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallBrickMM, 3, j),
-					"BMB", "MBM", 'B',new ItemStack(TFCItems.stoneBrick,1,j+Global.STONE_MM_START), 'M',new ItemStack(TFCItems.mortar,1));
-			GameRegistry.addRecipe(new ItemStack(TFCBlocks.wallSmoothMM, 3, j),
-					"RRR", "RRR", 'R', new ItemStack(TFCBlocks.stoneMMSmooth,1,j));
+			GameRegistry.addRecipe(new ItemStack(sv.getType().getWallCobble(), 4, sv.getLocalIndex()),
+					"RRR", "RRR", 'R', new ItemStack(TFCItems.looseRock,1,sv.getGeneralIndex()));
+			GameRegistry.addRecipe(new ItemStack(sv.getType().getWallStone(), 3, sv.getLocalIndex()),
+					"RRR", "RRR", 'R', new ItemStack(sv.getType().getStone(),1,sv.getLocalIndex()));
+			GameRegistry.addRecipe(new ItemStack(sv.getType().getWallBrick(), 3, sv.getLocalIndex()),
+					"BMB", "MBM", 'B', new ItemStack(TFCItems.stoneBrick,1,sv.getGeneralIndex()), 'M',new ItemStack(TFCItems.mortar,1));
+			GameRegistry.addRecipe(new ItemStack(sv.getType().getWallSmooth(), 3, sv.getLocalIndex()),
+					"RRR", "RRR", 'R', new ItemStack(sv.getType().getSmooth(),1,sv.getLocalIndex()));
 		}
 
 		//Ingot -> Unshaped
@@ -828,33 +765,32 @@ public class Recipes
 		CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.stoneHammerHead, 1), new Object[]
 				{ "#####", "#####", "  #  ", '#', new ItemStack(TFCItems.flatRock, 1, WILD) });
 
-		for(int i = 0; i < Global.STONE_IGIN.length; i++)
-		{
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igInStoneShovelHead, 1), new Object[] { "###","###","###","###"," # ", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_IGIN_START)});
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igInStoneAxeHead, 1), new Object[] { " #   ","#### ","#####","#### "," #   ", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_IGIN_START)});
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igInStoneHoeHead, 1), new Object[] { "#####","   ##", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_IGIN_START)});
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igInStoneJavelinHead, 1), new Object[] { "###  ","#### ","#####"," ### ","  #  ", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_IGIN_START)});
+		for (StoneVariant sv : TFCBlocks.stoneTypeIgIn.getVariants()) {
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igInStoneShovelHead, 1), new Object[] { "###","###","###","###"," # ", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igInStoneAxeHead, 1), new Object[] { " #   ","#### ","#####","#### "," #   ", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igInStoneHoeHead, 1), new Object[] { "#####","   ##", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igInStoneJavelinHead, 1), new Object[] { "###  ","#### ","#####"," ### ","  #  ", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
 		}
-		for(int i = 0; i < Global.STONE_SED.length; i++)
+		for(StoneVariant sv : TFCBlocks.stoneTypeSed.getVariants())
 		{
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.sedStoneShovelHead, 1), new Object[] { "###","###","###","###"," # ", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_SED_START)});
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.sedStoneAxeHead, 1), new Object[] { " #   ","#### ","#####","#### "," #   ", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_SED_START)});
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.sedStoneHoeHead, 1), new Object[] { "#####","   ##", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_SED_START)});
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.sedStoneJavelinHead, 1), new Object[] { "###  ","#### ","#####"," ### ","  #  ", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_SED_START)});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.sedStoneShovelHead, 1), new Object[] { "###","###","###","###"," # ", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.sedStoneAxeHead, 1), new Object[] { " #   ","#### ","#####","#### "," #   ", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.sedStoneHoeHead, 1), new Object[] { "#####","   ##", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.sedStoneJavelinHead, 1), new Object[] { "###  ","#### ","#####"," ### ","  #  ", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
 		}
-		for(int i = 0; i < Global.STONE_IGEX.length; i++)
+		for(StoneVariant sv : TFCBlocks.stoneTypeIgEx.getVariants())
 		{
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igExStoneShovelHead, 1), new Object[] { "###","###","###","###"," # ", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_IGEX_START)});
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igExStoneAxeHead, 1), new Object[] { " #   ","#### ","#####","#### "," #   ", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_IGEX_START)});
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igExStoneHoeHead, 1), new Object[] { "#####","   ##", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_IGEX_START)});
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igExStoneJavelinHead, 1), new Object[] { "###  ","#### ","#####"," ### ","  #  ", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_IGEX_START)});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igExStoneShovelHead, 1), new Object[] { "###","###","###","###"," # ", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igExStoneAxeHead, 1), new Object[] { " #   ","#### ","#####","#### "," #   ", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igExStoneHoeHead, 1), new Object[] { "#####","   ##", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.igExStoneJavelinHead, 1), new Object[] { "###  ","#### ","#####"," ### ","  #  ", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
 		}
-		for(int i = 0; i < Global.STONE_MM.length; i++)
+		for(StoneVariant sv : TFCBlocks.stoneTypeMM.getVariants())
 		{
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.mMStoneShovelHead, 1), new Object[] { "###","###","###","###"," # ", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_MM_START)});
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.mMStoneAxeHead, 1), new Object[] { " #   ","#### ","#####","#### "," #   ", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_MM_START)});
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.mMStoneHoeHead, 1), new Object[] { "#####","   ##", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_MM_START)});
-			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.mMStoneJavelinHead, 1), new Object[] { "###  ","#### ","#####"," ### ","  #  ", '#', new ItemStack(TFCItems.flatRock, 1, i + Global.STONE_MM_START)});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.mMStoneShovelHead, 1), new Object[] { "###","###","###","###"," # ", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.mMStoneAxeHead, 1), new Object[] { " #   ","#### ","#####","#### "," #   ", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.mMStoneHoeHead, 1), new Object[] { "#####","   ##", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
+			CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.mMStoneJavelinHead, 1), new Object[] { "###  ","#### ","#####"," ### ","  #  ", '#', new ItemStack(TFCItems.flatRock, 1, sv.getGeneralIndex())});
 		}
 
 

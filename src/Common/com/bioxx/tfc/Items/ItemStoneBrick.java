@@ -1,6 +1,8 @@
 package com.bioxx.tfc.Items;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -12,6 +14,7 @@ import net.minecraft.world.World;
 
 import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Core.TFCTabs;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
 import com.bioxx.tfc.api.Constant.Global;
 
 public class ItemStoneBrick extends ItemTerra
@@ -23,7 +26,7 @@ public class ItemStoneBrick extends ItemTerra
 		this.hasSubtypes = true;
 		this.setMaxDamage(0);
 		setCreativeTab(TFCTabs.TFC_MATERIALS);
-		this.metaNames = Global.STONE_ALL;
+		this.metaNames = Arrays.stream(StoneVariant.getVariants()).map(StoneVariant::getName).collect(Collectors.toList()).toArray(new String[0]);
 		this.icons = new IIcon[metaNames.length];
 	}
 	public ItemStoneBrick(int id, String tex) 
@@ -111,16 +114,12 @@ public class ItemStoneBrick extends ItemTerra
 	@Override
 	public void registerIcons(IIconRegister registerer)
 	{
-		for(int i = 0; i < metaNames.length; i++) {
-			icons[i] = registerer.registerIcon(Reference.MOD_ID + ":" + "rocks/"+metaNames[i]+" Brick");
-		}
+		StoneVariant.getAllVariants().forEach(sv -> icons[sv.getGeneralIndex()] = registerer.registerIcon(Reference.MOD_ID + ":" + "rocks/"+sv.getName()+" Brick"));
 	}
 
 	@Override
 	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List list)
 	{
-		for(int i = 0; i < metaNames.length; i++) {
-			list.add(new ItemStack(this,1,i));
-		}
+		StoneVariant.getAllVariants().forEach(sv -> list.add(new ItemStack(this, 1, sv.getGeneralIndex())));
 	}
 }

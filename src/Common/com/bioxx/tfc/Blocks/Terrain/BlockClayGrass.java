@@ -16,9 +16,9 @@ import com.bioxx.tfc.api.TFCItems;
 
 public class BlockClayGrass extends BlockGrass
 {
-	public BlockClayGrass(int texOff)
+	public BlockClayGrass(int index)
 	{
-		super(texOff);
+		super(index);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class BlockClayGrass extends BlockGrass
 	public void updateTick(World world, int x, int y, int z, Random rand)
 	{
 		if (world.getBlock(x, y + 1, z).isSideSolid(world, x, y + 1, z, ForgeDirection.DOWN))
-			world.setBlock(x, y, z, TFC_Core.getTypeForClay(world.getBlockMetadata(x, y, z) + textureOffset), world.getBlockMetadata(x, y, z), 0x2);
+			world.setBlock(x, y, z, TFCBlocks.clays.getBlock(world.getBlockMetadata(x, y, z) + index), world.getBlockMetadata(x, y, z), 0x2);
 		else if (world.canBlockSeeTheSky(x, y + 1, z))
 		{
 			spreadGrass(world, x, y, z, rand);

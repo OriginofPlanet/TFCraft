@@ -15,6 +15,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import com.bioxx.tfc.Blocks.Terrain.BlockPeat;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.api.TFCBlocks;
+import com.bioxx.tfc.api.Blocks.IBlockSoil;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
 import com.bioxx.tfc.api.Constant.Global;
 
 public class ItemSoil extends ItemTerraBlock
@@ -37,20 +39,14 @@ public class ItemSoil extends ItemTerraBlock
 			return;
 
 		int dam = is.getItemDamage();
-		if (b == TFCBlocks.dirt2
-				|| b == TFCBlocks.sand2
-				|| b == TFCBlocks.clay2
-				|| TFC_Core.isGrassType2(b)
-				|| b == TFCBlocks.tilledSoil2
-				|| b == TFCBlocks.gravel2)
-		{
-			dam += 16;
-		}
+		if (b instanceof IBlockSoil) dam += ((IBlockSoil) b).getStoneTypeIndex();
 
-		if (dam < Global.STONE_ALL.length)
-			arraylist.add(EnumChatFormatting.DARK_GRAY + Global.STONE_ALL[dam]);
-		else
+		StoneVariant sv = StoneVariant.get(dam);
+		if (sv.isAvailable()) {
+			arraylist.add(EnumChatFormatting.DARK_GRAY + sv.getName());
+		} else {
 			arraylist.add(EnumChatFormatting.DARK_RED + "Unknown");
+		}
 	}
 
 	@Override

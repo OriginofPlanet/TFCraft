@@ -23,19 +23,28 @@ import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Items.Tools.ItemHammer;
 import com.bioxx.tfc.api.TFCItems;
+import com.bioxx.tfc.api.Blocks.IBlockStoneType;
+import com.bioxx.tfc.api.Blocks.StoneType;
 import com.bioxx.tfc.api.Tools.IToolChisel;
 
-public class BlockStone extends BlockCollapsible
+public class BlockStone extends BlockCollapsible implements IBlockStoneType
 {
-	public BlockStone(Material material)
+	protected BlockStone(StoneType stoneType)
 	{
-		super(material);
+		super(Material.rock);
+		this.stoneType = stoneType;
+		this.dropBlock = stoneType.getCobble();
 	}
 
-	protected String[] names;
-	public IIcon[] icons;
-	protected int looseStart;
-	protected int gemChance;
+	public IIcon[] icons = new IIcon[8];
+	// MM = 3, IGEX = 0, IGIN = 2, SED = 1
+	protected int gemChance = 0;
+	public final StoneType stoneType;
+
+	public BlockStone setGemChance(int gemChance) {
+		this.gemChance = gemChance;
+		return this;
+	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
@@ -44,8 +53,7 @@ public class BlockStone extends BlockCollapsible
 	 */
 	public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
 	{
-		for(int i = 0; i < names.length; i++)
-			par3List.add(new ItemStack(par1, 1, i));
+		stoneType.getVariants().forEach(sv -> par3List.add(new ItemStack(par1, 1, sv.getLocalIndex())));
 	}
 
 	/*
@@ -68,8 +76,7 @@ public class BlockStone extends BlockCollapsible
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegisterer)
 	{
-		for(int i = 0; i < names.length; i++)
-			icons[i] = iconRegisterer.registerIcon(Reference.MOD_ID + ":" + "rocks/"+names[i]+" Raw");
+		stoneType.getVariants().forEach(sv -> {icons[sv.getLocalIndex()] = iconRegisterer.registerIcon(Reference.MOD_ID + ":" + "rocks/"+sv.getName()+" Raw");});
 	}
 
 	@Override
@@ -91,7 +98,7 @@ public class BlockStone extends BlockCollapsible
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
 	{
 		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
-		int meta = looseStart + metadata;
+		int meta = stoneType.get(metadata).getGeneralIndex();
 
 		int count = this.quantityDropped(world.rand);
 		for (int i = 0; i < count; i++)
@@ -172,7 +179,7 @@ public class BlockStone extends BlockCollapsible
 	@Override
 	public void harvestBlock(World world, EntityPlayer entityplayer, int i, int j, int k, int l)
 	{
-		dropBlockAsItem(world, i, j, k, new ItemStack(TFCItems.looseRock, world.rand.nextInt(2) + 1, l + looseStart));
+		dropBlockAsItem(world, i, j, k, new ItemStack(TFCItems.looseRock, world.rand.nextInt(2) + 1, stoneType.get(l).getGeneralIndex()));
 
 		super.harvestBlock(world, entityplayer, i, j, k, l);
 	}
@@ -193,5 +200,10 @@ public class BlockStone extends BlockCollapsible
 				world.spawnEntityInWorld(item);
 			}
 		}
+	}
+
+	@Override
+	public StoneType getStoneType() {
+		return stoneType;
 	}
 }

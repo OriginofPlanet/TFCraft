@@ -21,19 +21,22 @@ import cpw.mods.fml.relauncher.SideOnly;
 import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Blocks.BlockTerra;
 import com.bioxx.tfc.Core.TFCTabs;
+import com.bioxx.tfc.api.Blocks.IBlockSoil;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
 import com.bioxx.tfc.api.Constant.Global;
 
-public class BlockGravel extends BlockTerra
+public class BlockGravel extends BlockTerra implements IBlockSoil
 {
-	protected IIcon[] icons;
-	protected int textureOffset;
+	protected IIcon[] icons = new IIcon[16];
+	protected int index;
 
-	public BlockGravel(int texOff)
+	public BlockGravel(int index)
 	{
 		super(Material.ground);
 		this.setCreativeTab(TFCTabs.TFC_BUILDING);
-		textureOffset = texOff;
+		this.index = index;
 		this.setTickRandomly(true);
+		this.setCollapsible(true);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -48,12 +51,9 @@ public class BlockGravel extends BlockTerra
 
 		if(addToCreative)
 		{
-			int count;
-			if(textureOffset == 0) count = 16;
-			else count = Global.STONE_ALL.length - 16;
-
-			for(int i = 0; i < count; i++)
+			for (int i = 0; i < 16; i++) if (StoneVariant.get(i + 16).isAvailable()) {
 				list.add(new ItemStack(item, 1, i));
+			}
 		}
 	}
 
@@ -102,10 +102,10 @@ public class BlockGravel extends BlockTerra
 	@Override
 	public void registerBlockIcons(IIconRegister registerer)
 	{
-		int count = (textureOffset == 0 ? 16 : Global.STONE_ALL.length - 16);
-		icons = new IIcon[count];
-		for (int i = 0; i < count; i++)
-			icons[i] = registerer.registerIcon(Reference.MOD_ID + ":" + "soil/Gravel " + Global.STONE_ALL[i + textureOffset]);
+		StoneVariant sv;
+		for (int i = 0; i < 16; i++) if ((sv = StoneVariant.get(i + index)).isAvailable()) {
+			icons[i] = registerer.registerIcon(Reference.MOD_ID + ":" + "soil/Gravel " + sv.getName());
+		}
 	}
 
 	@Override
@@ -121,83 +121,6 @@ public class BlockGravel extends BlockTerra
 	}
 
 	@Override
-	public void updateTick(World world, int i, int j, int k, Random random)
-	{
-		if (!world.isRemote && world.doChunksNearChunkExist(i, j, k, 1) && !BlockCollapsible.isNearSupport(world, i, j, k, 4, 0))
-		{
-			int meta = world.getBlockMetadata(i, j, k);
-
-			boolean canFallOneBelow = BlockCollapsible.canFallBelow(world, i, j-1, k);
-			byte count = 0;
-			List<Integer> sides = new ArrayList<Integer>();
-
-			if(world.isAirBlock(i+1, j, k))
-			{
-				count++;
-				if(BlockCollapsible.canFallBelow(world, i+1, j-1, k))
-					sides.add(0);
-			}
-			if(world.isAirBlock(i, j, k+1))
-			{
-				count++;
-				if(BlockCollapsible.canFallBelow(world, i, j-1, k+1))
-					sides.add(1);
-			}
-			if(world.isAirBlock(i-1, j, k))
-			{
-				count++;
-				if(BlockCollapsible.canFallBelow(world, i-1, j-1, k))
-					sides.add(2);
-			}
-			if(world.isAirBlock(i, j, k-1))
-			{
-				count++;
-				if(BlockCollapsible.canFallBelow(world, i, j-1, k-1))
-					sides.add(3);
-			}
-
-			if (!canFallOneBelow && count > 2 && !sides.isEmpty())
-			{
-				switch (sides.get(random.nextInt(sides.size())))
-				{
-				case 0:
-				{
-					world.setBlockToAir(i, j, k);
-					world.setBlock(i+1, j, k, this, meta, 0x2);
-					BlockCollapsible.tryToFall(world, i + 1, j, k, this);
-					break;
-				}
-				case 1:
-				{
-					world.setBlockToAir(i, j, k);
-					world.setBlock(i, j, k+1, this, meta, 0x2);
-					BlockCollapsible.tryToFall(world, i, j, k + 1, this);
-					break;
-				}
-				case 2:
-				{
-					world.setBlockToAir(i, j, k);
-					world.setBlock(i-1, j, k, this, meta, 0x2);
-					BlockCollapsible.tryToFall(world, i - 1, j, k, this);
-					break;
-				}
-				case 3:
-				{
-					world.setBlockToAir(i, j, k);
-					world.setBlock(i, j, k-1, this, meta, 0x2);
-					BlockCollapsible.tryToFall(world, i, j, k - 1, this);
-					break;
-				}
-				}
-			}
-			else if(canFallOneBelow)
-			{
-				BlockCollapsible.tryToFall(world, i, j, k, this);
-			}
-		}
-	}
-
-	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block b)
 	{
 		if (!world.isRemote)
@@ -205,5 +128,10 @@ public class BlockGravel extends BlockTerra
 			BlockCollapsible.tryToFall(world, x, y, z, this);
 			world.scheduleBlockUpdate(x, y, z, this, tickRate(world));
 		}
+	}
+
+	@Override
+	public int getStoneTypeIndex() {
+		return index;
 	}
 }

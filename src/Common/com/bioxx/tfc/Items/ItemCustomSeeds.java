@@ -50,7 +50,7 @@ public class ItemCustomSeeds extends ItemTerra
 		else if (player.canPlayerEdit(x, y, z, side, stack) && player.canPlayerEdit(x, y + 1, z, side, stack))
 		{
 			Block var8 = world.getBlock(x, y, z);
-			if ((var8 == TFCBlocks.tilledSoil || var8 == TFCBlocks.tilledSoil2) && world.isAirBlock(x, y + 1, z))
+			if (TFCBlocks.tilledSoils.isInstance(var8) && world.isAirBlock(x, y + 1, z))
 			{
 				CropIndex crop = CropManager.getInstance().getCropFromId(cropId);
 				if (crop.needsSunlight && !TECrop.hasSunlight(world, x, y + 1, z))

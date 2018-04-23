@@ -1,6 +1,8 @@
 package com.bioxx.tfc.Items;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -17,6 +19,8 @@ import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.Player.PlayerInfo;
 import com.bioxx.tfc.Core.Player.PlayerManagerTFC;
+import com.bioxx.tfc.api.Blocks.StoneType;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
 import com.bioxx.tfc.api.Constant.Global;
 
 public class ItemLooseRock extends ItemTerra
@@ -31,7 +35,7 @@ public class ItemLooseRock extends ItemTerra
 		this.hasSubtypes = true;
 		this.setMaxDamage(0);
 		this.setCreativeTab(TFCTabs.TFC_MATERIALS);
-		this.metaNames = Global.STONE_ALL;
+		this.metaNames = Arrays.stream(StoneVariant.getVariants()).map(StoneVariant::getName).collect(Collectors.toList()).toArray(new String[0]);
 		icons = new IIcon[metaNames.length];
 	}
 
@@ -123,16 +127,12 @@ public class ItemLooseRock extends ItemTerra
 	@Override
 	public void registerIcons(IIconRegister registerer)
 	{
-		for(int i = 0; i < metaNames.length; i++)
-			icons[i] = registerer.registerIcon(Reference.MOD_ID + ":" + "rocks/" + metaNames[i] + " Rock");
+		StoneVariant.getAllVariants().forEach(sv -> icons[sv.getGeneralIndex()] = registerer.registerIcon(Reference.MOD_ID + ":" + "rocks/" + sv.getName() + " Rock"));
 	}
 
 	@Override
 	public void getSubItems(Item item, CreativeTabs tabs, List list)
 	{
-		for(int i = 0; i < metaNames.length; i++)
-		{
-			list.add(new ItemStack(this, 1, i));
-		}
+		StoneVariant.getAllVariants().forEach(sv -> list.add(new ItemStack(this, 1, sv.getGeneralIndex())));
 	}
 }

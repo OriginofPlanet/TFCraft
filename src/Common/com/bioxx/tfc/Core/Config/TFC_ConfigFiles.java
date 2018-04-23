@@ -22,6 +22,8 @@ import com.bioxx.tfc.WorldGen.Generators.OreSpawnData;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCCrafting;
 import com.bioxx.tfc.api.TFCItems;
+import com.bioxx.tfc.api.Blocks.StoneType;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
 import com.bioxx.tfc.api.Constant.Global;
 import com.bioxx.tfc.api.Crafting.CraftingManagerTFC;
 import com.google.common.base.Throwables;
@@ -69,7 +71,7 @@ public class TFC_ConfigFiles
 	// Used as allowed values for Ore
 	private static final String[] ALLOWED_TYPES = new String[] {"default", "veins"};
 	private static final String[] ALLOWED_SIZES = new String[] {"small", "medium", "large"};
-	private static final String[] ALLOWED_BASE_ROCKS = ObjectArrays.concat(Global.STONE_ALL, new String[] {"igneous intrusive", "igneous extrusive", "sedimentary", "metamorphic"}, String.class);
+	private static final String[] ALLOWED_BASE_ROCKS = ObjectArrays.concat(StoneVariant.getAllVariantNames().toArray(new String[0]), StoneType.getAllTypeNames().toArray(new String[0]), String.class);
 
 	public static final Map<String, SyncingOption> SYNCING_OPTION_MAP = new CaseInsensitiveHashMap<SyncingOption>();
 

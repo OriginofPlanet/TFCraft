@@ -9,6 +9,7 @@ import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Blocks.Terrain.BlockStone;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.api.TFCBlocks;
+import com.bioxx.tfc.api.Blocks.StoneType;
 import com.bioxx.tfc.api.Tools.ChiselMode;
 
 /**
@@ -83,15 +84,10 @@ public class ChiselMode_Smooth extends ChiselMode {
 		{
             int hasChisel = hasChisel(player);
             if( hasChisel >= 0 ){
-                if(id == TFCBlocks.stoneIgIn) {
-                    world.setBlock(x, y, z, TFCBlocks.stoneIgInSmooth, meta, 0x2);
-                } else if(id == TFCBlocks.stoneIgEx) {
-                    world.setBlock(x, y, z, TFCBlocks.stoneIgExSmooth, meta, 0x2);
-                } else if(id == TFCBlocks.stoneSed) {
-                    world.setBlock(x, y, z, TFCBlocks.stoneSedSmooth, meta, 0x2);
-                } else if(id == TFCBlocks.stoneMM) {
-                    world.setBlock(x, y, z, TFCBlocks.stoneMMSmooth, meta, 0x2);
-                }
+            	for (StoneType st : StoneType.getAllTypes()) if (id == st.getStone()) {
+            		world.setBlock(x, y, z, st.getSmooth(), meta, 0x2);
+            		break;
+            	}
 
                 player.inventory.mainInventory[hasChisel].damageItem(1, player);
 				return true;

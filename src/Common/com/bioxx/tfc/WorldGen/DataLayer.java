@@ -4,32 +4,34 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
 import com.bioxx.tfc.api.TFCBlocks;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
+import com.bioxx.tfc.api.Constant.Global;
 
 public class DataLayer
 {
 	public static DataLayer[] layers = new DataLayer[256];
 
-	public static final DataLayer GRANITE = new DataLayer(0, TFCBlocks.stoneIgIn, 0, 0, "Granite");
-	public static final DataLayer DIORITE = new DataLayer(1, TFCBlocks.stoneIgIn, 1, 1, "Diorite");
-	public static final DataLayer GABBRO = new DataLayer(2, TFCBlocks.stoneIgIn, 2, 2, "Gabbro");
-	public static final DataLayer SHALE = new DataLayer(5, TFCBlocks.stoneSed, 0, 3, "Shale");
-	public static final DataLayer CLAYSTONE = new DataLayer(6, TFCBlocks.stoneSed, 1, 4, "Claystone");
-	public static final DataLayer ROCKSALT = new DataLayer(7, TFCBlocks.stoneSed, 2, 5, "Rock Salt");
-	public static final DataLayer LIMESTONE = new DataLayer(8, TFCBlocks.stoneSed, 3, 6, "Limestone");
-	public static final DataLayer CONGLOMERATE = new DataLayer(9, TFCBlocks.stoneSed, 4, 7, "Conglomerate");
-	public static final DataLayer DOLOMITE = new DataLayer(10, TFCBlocks.stoneSed, 5, 8, "Dolomite");
-	public static final DataLayer CHERT = new DataLayer(11, TFCBlocks.stoneSed, 6, 9, "Chert");
-	public static final DataLayer CHALK = new DataLayer(12, TFCBlocks.stoneSed, 7, 10, "Chalk");
-	public static final DataLayer RHYOLITE = new DataLayer(13, TFCBlocks.stoneIgEx, 0, 11, "Rhyolite");
-	public static final DataLayer BASALT = new DataLayer(14, TFCBlocks.stoneIgEx, 1, 12, "Basalt");
-	public static final DataLayer ANDESITE = new DataLayer(15, TFCBlocks.stoneIgEx, 2, 13, "Andesite");
-	public static final DataLayer DACITE = new DataLayer(16, TFCBlocks.stoneIgEx, 3, 14, "Dacite");
-	public static final DataLayer QUARTZITE = new DataLayer(17, TFCBlocks.stoneMM, 0, 15, "Quartzite");
-	public static final DataLayer SLATE = new DataLayer(18, TFCBlocks.stoneMM, 1, 16, "Slate");
-	public static final DataLayer PHYLLITE = new DataLayer(19, TFCBlocks.stoneMM, 2, 17, "Phyllite");
-	public static final DataLayer SCHIST = new DataLayer(20, TFCBlocks.stoneMM, 3, 18, "Schist");
-	public static final DataLayer GNEISS = new DataLayer(21, TFCBlocks.stoneMM, 4, 19, "Gneiss");
-	public static final DataLayer MARBLE = new DataLayer(22, TFCBlocks.stoneMM, 5, 20, "Marble");
+	public static final DataLayer GRANITE = new DataLayer(0, Global.Granite, 0);
+	public static final DataLayer DIORITE = new DataLayer(1, Global.Diorite, 1);
+	public static final DataLayer GABBRO = new DataLayer(2, Global.Gabbro, 2);
+	public static final DataLayer SHALE = new DataLayer(5, Global.Shale, 3);
+	public static final DataLayer CLAYSTONE = new DataLayer(6, Global.Claystone, 4);
+	public static final DataLayer ROCKSALT = new DataLayer(7, Global.Rock_Salt, 5);
+	public static final DataLayer LIMESTONE = new DataLayer(8, Global.Limestone, 6);
+	public static final DataLayer CONGLOMERATE = new DataLayer(9, Global.Conglomerate, 7);
+	public static final DataLayer DOLOMITE = new DataLayer(10, Global.Dolomite, 8);
+	public static final DataLayer CHERT = new DataLayer(11, Global.Chert, 9);
+	public static final DataLayer CHALK = new DataLayer(12, Global.Chalk, 10);
+	public static final DataLayer RHYOLITE = new DataLayer(13, Global.Rhyolite, 11);
+	public static final DataLayer BASALT = new DataLayer(14, Global.Basalt, 12);
+	public static final DataLayer ANDESITE = new DataLayer(15, Global.Andesite, 13);
+	public static final DataLayer DACITE = new DataLayer(16, Global.Dacite, 14);
+	public static final DataLayer QUARTZITE = new DataLayer(17, Global.Quartzite, 15);
+	public static final DataLayer SLATE = new DataLayer(18, Global.Slate, 16);
+	public static final DataLayer PHYLLITE = new DataLayer(19, Global.Phyllite, 17);
+	public static final DataLayer SCHIST = new DataLayer(20, Global.Schist, 18);
+	public static final DataLayer GNEISS = new DataLayer(21, Global.Gneiss, 19);
+	public static final DataLayer MARBLE = new DataLayer(22, Global.Marble, 20);
 
 	public static final DataLayer NO_TREE = new DataLayer(29, "No Tree", -1);
 	public static final DataLayer ASH = new DataLayer(30, "Ash", 7);
@@ -108,6 +110,10 @@ public class DataLayer
 		data2 = meta;
 		floatdata1 = 0;
 		layers[index] = this;
+	}
+
+	public DataLayer(int index, StoneVariant sv, int altMeta) {
+		this(index, sv.getType().getStone(), sv.getLocalIndex(), altMeta, sv.getName());
 	}
 
 	public DataLayer(int index, Block b, int meta, int altMeta, String n)

@@ -22,17 +22,19 @@ import com.bioxx.tfc.TerraFirmaCraft;
 import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCOptions;
+import com.bioxx.tfc.api.Blocks.IBlockStoneType;
+import com.bioxx.tfc.api.Blocks.StoneType;
 
-public class BlockCustomWall extends BlockWall
+public class BlockCustomWall extends BlockWall implements IBlockStoneType
 {
-	private int totalsubTypes;
 	private Block block;
+	public final StoneType stoneType;
 
-	public BlockCustomWall(Block blk, int t)
+	public BlockCustomWall(Block blk, StoneType stoneType)
 	{
 		super(blk);
 		this.block = blk;
-		totalsubTypes = t;
+		this.stoneType = stoneType;
 		this.setCreativeTab(TFCTabs.TFC_BUILDING);
 	}
 
@@ -79,9 +81,7 @@ public class BlockCustomWall extends BlockWall
 	@Override
 	public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
 	{
-		for(int i = 0; i < totalsubTypes; i++) {
-			par3List.add(new ItemStack(par1, 1, i));
-		}
+		stoneType.getVariants().forEach(sv -> par3List.add(new ItemStack(par1, 1, sv.getLocalIndex())));
 	}
 
 	/**
@@ -170,5 +170,10 @@ public class BlockCustomWall extends BlockWall
 	public boolean canBeReplacedByLeaves(IBlockAccess world, int x, int y, int z)
 	{
 		return false;
+	}
+
+	@Override
+	public StoneType getStoneType() {
+		return stoneType;
 	}
 }

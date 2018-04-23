@@ -24,6 +24,7 @@ import com.bioxx.tfc.Core.TFC_Textures;
 import com.bioxx.tfc.Items.ItemTerra;
 import com.bioxx.tfc.TileEntities.TEFarmland;
 import com.bioxx.tfc.api.TFCBlocks;
+import com.bioxx.tfc.api.Blocks.SoilType;
 import com.bioxx.tfc.api.Crafting.AnvilManager;
 import com.bioxx.tfc.api.Enums.EnumItemReach;
 import com.bioxx.tfc.api.Enums.EnumSize;
@@ -86,54 +87,30 @@ public class ItemCustomHoe extends ItemHoe implements ISize
 				return false;
 			else
 			{
-				Block var10 = var8 == TFCBlocks.dirt || var8 == TFCBlocks.grass || var8 == TFCBlocks.dryGrass ? TFCBlocks.dirt : 
-					var8 == TFCBlocks.dirt2 || var8 == TFCBlocks.grass2 || var8 == TFCBlocks.dryGrass2 ? TFCBlocks.dirt2 : null;
+				int index = SoilType.getIndexIfAnyMatch(var8, TFCBlocks.grasses, TFCBlocks.dirts, TFCBlocks.dryGrasses);
+				Block var10 = index >= 0 ? TFCBlocks.dirts.getBlockAt(index) : null;
+				
 				if(var10 != null)
 				{
 					int meta = world.getBlockMetadata(x, y, z);
-					if(var10 == TFCBlocks.dirt)
+					world.playSoundEffect(x + 0.5F, y + 0.5F, z + 0.5F, var10.stepSound.getStepResourcePath(), (var10.stepSound.getVolume() + 1.0F) / 2.0F, var10.stepSound.getPitch() * 0.8F);
+
+					if (world.isRemote)
+						return true;
+					else
 					{
-						world.playSoundEffect(x + 0.5F, y + 0.5F, z + 0.5F, var10.stepSound.getStepResourcePath(), (var10.stepSound.getVolume() + 1.0F) / 2.0F, var10.stepSound.getPitch() * 0.8F);
+						world.setBlock(x, y, z, TFCBlocks.tilledSoils.getBlockAt(index), meta, 0x2);
+						world.markBlockForUpdate(x, y, z);
+						stack.damageItem(1, player);
 
-						if (world.isRemote)
-							return true;
-						else
+						if(isDirt)
 						{
-							world.setBlock(x, y, z, TFCBlocks.tilledSoil, meta, 0x2);
-							world.markBlockForUpdate(x, y, z);
-							stack.damageItem(1, player);
-
-							if(isDirt)
-							{
-								TEFarmland te = (TEFarmland) world.getTileEntity(x, y, z);
-								te.nutrients[0] = 100;
-								te.nutrients[1] = 100;
-								te.nutrients[2] = 100;
-							}
-							return true;
+							TEFarmland te = (TEFarmland) world.getTileEntity(x, y, z);
+							te.nutrients[0] = 100;
+							te.nutrients[1] = 100;
+							te.nutrients[2] = 100;
 						}
-					}
-					else if(var10 == TFCBlocks.dirt2)
-					{
-						world.playSoundEffect(x + 0.5F, y + 0.5F, z + 0.5F, var10.stepSound.getStepResourcePath(), (var10.stepSound.getVolume() + 1.0F) / 2.0F, var10.stepSound.getPitch() * 0.8F);
-
-						if (world.isRemote)
-							return true;
-						else
-						{
-							world.setBlock(x, y, z, TFCBlocks.tilledSoil2, meta, 0x2);
-							world.markBlockForUpdate(x, y, z);
-							stack.damageItem(1, player);
-
-							if(isDirt)
-							{
-								TEFarmland te = (TEFarmland) world.getTileEntity(x, y, z);
-								te.nutrients[0] = 100;
-								te.nutrients[1] = 100;
-								te.nutrients[2] = 100;
-							}
-							return true;
-						}
+						return true;
 					}
 				}
 			}

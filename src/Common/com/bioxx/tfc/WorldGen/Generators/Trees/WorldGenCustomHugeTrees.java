@@ -84,8 +84,7 @@ public class WorldGenCustomHugeTrees extends WorldGenerator
 							Block block = world.getBlock(tempX, blockUnder, tempZ);
 							if (!block.isAir(world, tempX, blockUnder, tempZ) &&
 									(block != TFCBlocks.leaves || block != TFCBlocks.leaves2) &&
-									(block != TFCBlocks.grass || block != TFCBlocks.grass2) &&
-									(block != TFCBlocks.dirt || block != TFCBlocks.dirt2) &&
+									!TFC_Core.isGrassOrDirt(block) &&
 									(block != TFCBlocks.logNatural || block != TFCBlocks.logNatural2) &&
 									(block != TFCBlocks.sapling || block != TFCBlocks.sapling2) &&
 									!(TFC_Core.isSoil(block)))

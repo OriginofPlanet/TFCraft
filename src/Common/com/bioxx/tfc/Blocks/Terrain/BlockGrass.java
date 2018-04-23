@@ -28,11 +28,13 @@ import com.bioxx.tfc.Core.*;
 import com.bioxx.tfc.WorldGen.Generators.WorldGenSaplings;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCOptions;
+import com.bioxx.tfc.api.Blocks.IBlockSoil;
+import com.bioxx.tfc.api.Blocks.StoneVariant;
 import com.bioxx.tfc.api.Constant.Global;
 
-public class BlockGrass extends BlockTerra
+public class BlockGrass extends BlockTerra implements IBlockSoil
 {
-	protected int textureOffset;
+	protected int index;
 
 	@SideOnly(Side.CLIENT)
 	public IIcon grassTopTexture;
@@ -48,10 +50,10 @@ public class BlockGrass extends BlockTerra
 		this.setCreativeTab(TFCTabs.TFC_BUILDING);
 	}
 
-	public BlockGrass(int texOff)
+	public BlockGrass(int index)
 	{
 		this();
-		textureOffset = texOff;
+		this.index = index;
 		this.setCreativeTab(TFCTabs.TFC_BUILDING);
 	}
 
@@ -63,18 +65,15 @@ public class BlockGrass extends BlockTerra
 
 		if(addToCreative)
 		{
-			int count;
-			if(textureOffset == 0) count = 16;
-			else count = Global.STONE_ALL.length - 16;
-
-			for(int i = 0; i < count; i++)
+			for (int i = 0; i < 16; i++) if (StoneVariant.get(i + index).isAvailable()) {
 				list.add(new ItemStack(item, 1, i));
+			}
 		}
 	}
 
 	public static IIcon getIconSideOverlay()
 	{
-		return ((BlockGrass)TFCBlocks.grass).iconGrassSideOverlay;
+		return ((BlockGrass)TFCBlocks.grasses.getBlock(0)).iconGrassSideOverlay;
 	}
 
 	@Override
@@ -310,7 +309,7 @@ public class BlockGrass extends BlockTerra
 	@Override
 	public void onEntityWalking(World world, int x, int y, int z, Entity entity)
 	{
-		if (!world.isRemote && this != TFCBlocks.clayGrass2 && this != TFCBlocks.clayGrass && this != TFCBlocks.peatGrass)
+		if (!world.isRemote && !TFCBlocks.clayGrasses.isInstance(this) && this != TFCBlocks.peatGrass)
 		{
 			Random r = new Random();
 			if (BlockCollapsible.canFallBelow(world, x, y - 1, z) && r.nextInt(10) == 0 && !BlockCollapsible.isNearSupport(world, x, y, z, 4, 0))
@@ -339,5 +338,10 @@ public class BlockGrass extends BlockTerra
 			world.setBlock(x, y, z, TFC_Core.getTypeForDirtFromGrass(this), meta, 0x2);
 			world.scheduleBlockUpdate(x, y, z, TFC_Core.getTypeForDirtFromGrass(this), 5);
 		}
+	}
+
+	@Override
+	public int getStoneTypeIndex() {
+		return index;
 	}
 }

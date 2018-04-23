@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 
 import com.bioxx.tfc.api.TFCBlocks;
+import com.bioxx.tfc.api.Blocks.SoilType;
 
 public class RenderGrass
 {
@@ -13,10 +14,8 @@ public class RenderGrass
 		float green = 1F;
 		float blue = 1F;
 
-		if(block == TFCBlocks.grass || block == TFCBlocks.dryGrass)
-			renderer.renderStandardBlockWithAmbientOcclusion(TFCBlocks.dirt, x, y, z, red, blue, green);
-		else if(block == TFCBlocks.grass2 || block == TFCBlocks.dryGrass2)
-			renderer.renderStandardBlockWithAmbientOcclusion(TFCBlocks.dirt2, x, y, z, red, blue, green);
+		int index = SoilType.getIndexIfAnyMatch(block, TFCBlocks.grasses, TFCBlocks.dryGrasses);
+		if (index >= 0) renderer.renderStandardBlockWithAmbientOcclusion(TFCBlocks.dirts.getBlockAt(index), x, y, z, red, blue, green);
 
 		renderer.renderStandardBlock(block, x, y, z);
 
@@ -29,10 +28,8 @@ public class RenderGrass
 		float green = 1F;
 		float blue = 1F;
 
-		if(block == TFCBlocks.clayGrass)
-			renderer.renderStandardBlockWithAmbientOcclusion(TFCBlocks.clay, x, y, z, red, blue, green);
-		else if(block == TFCBlocks.clayGrass2)
-			renderer.renderStandardBlockWithAmbientOcclusion(TFCBlocks.clay2, x, y, z, red, blue, green);
+		int index = TFCBlocks.clayGrasses.getIndex(block);
+		if (index >= 0) renderer.renderStandardBlockWithAmbientOcclusion(TFCBlocks.clays.getBlockAt(index), x, y, z, red, blue, green);
 
 		renderer.renderStandardBlock(block, x, y, z);
 

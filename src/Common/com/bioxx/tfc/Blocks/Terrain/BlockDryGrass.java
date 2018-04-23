@@ -6,9 +6,9 @@ import com.bioxx.tfc.Reference;
 
 public class BlockDryGrass extends BlockGrass
 {
-	public BlockDryGrass(int texOff)
+	public BlockDryGrass(int index)
 	{
-		super(texOff);
+		super(index);
 	}
 
 	@Override

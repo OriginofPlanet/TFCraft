@@ -1,12 +1,15 @@
 package com.bioxx.tfc.WorldGen.Generators;
 
+import static com.bioxx.tfc.Core.TFC_Core.*;
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import com.bioxx.tfc.api.TFCBlocks;
+import com.bioxx.tfc.api.Constant.Global;
 
 public class WorldGenLiquidsTFC extends WorldGenerator
 {
@@ -20,53 +23,15 @@ public class WorldGenLiquidsTFC extends WorldGenerator
 	@Override
 	public boolean generate(World world, Random random, int i, int j, int k)
 	{
-		if (world.getBlock(i, j + 1, k) != TFCBlocks.stoneIgIn && world.getBlock(i, j + 1, k) != TFCBlocks.stoneSed &&
-				world.getBlock(i, j + 1, k) != TFCBlocks.stoneIgEx &&world.getBlock(i, j + 1, k) != TFCBlocks.stoneMM)
-		{
-			return false;
-		}
-		if (world.getBlock(i, j - 1, k) != TFCBlocks.stoneIgIn && world.getBlock(i, j - 1, k) != TFCBlocks.stoneSed &&
-				world.getBlock(i, j - 1, k) != TFCBlocks.stoneIgEx &&world.getBlock(i, j - 1, k) != TFCBlocks.stoneMM)
-		{
-			return false;
-		}
-		if (!world.isAirBlock(i, j, k) && world.getBlock(i, j, k) != TFCBlocks.stoneIgIn && world.getBlock(i, j, k) != TFCBlocks.stoneSed &&
-				world.getBlock(i, j, k) != TFCBlocks.stoneIgEx &&world.getBlock(i, j, k) != TFCBlocks.stoneMM)
-		{
-			return false;
-		}
+		if (!isRawStone(world, i, j + 1, k) && !isRawStone(world, i, j - 1, k)) return false;
+		if (!world.isAirBlock(i, j, k) && !isRawStone(world, i, j, k)) return false;
 
 		int l = 0;
-		if (world.getBlock(i - 1, j, k) == TFCBlocks.stoneIgIn && world.getBlock(i - 1, j, k) == TFCBlocks.stoneSed &&
-				world.getBlock(i - 1, j, k) == TFCBlocks.stoneIgEx &&world.getBlock(i - 1, j, k) == TFCBlocks.stoneMM)
-		{
-			l++;
-		}
-		if (world.getBlock(i + 1, j, k) == TFCBlocks.stoneIgIn && world.getBlock(i + 1, j, k) == TFCBlocks.stoneSed &&
-				world.getBlock(i + 1, j, k) == TFCBlocks.stoneIgEx &&world.getBlock(i + 1, j, k) == TFCBlocks.stoneMM)
-		{
-			l++;
-		}
-		if (world.getBlock(i, j, k - 1) == TFCBlocks.stoneIgIn && world.getBlock(i, j, k - 1) == TFCBlocks.stoneSed &&
-				world.getBlock(i, j, k - 1) == TFCBlocks.stoneIgEx &&world.getBlock(i, j, k - 1) == TFCBlocks.stoneMM)
-		{
-			l++;
-		}
-		if (world.getBlock(i, j, k + 1) == TFCBlocks.stoneIgIn && world.getBlock(i, j, k + 1) == TFCBlocks.stoneSed &&
-				world.getBlock(i, j, k + 1) == TFCBlocks.stoneIgEx &&world.getBlock(i, j, k + 1) == TFCBlocks.stoneMM)
-		{
-			l++;
-		}
-
 		int i1 = 0;
-		if (world.isAirBlock(i - 1, j, k))
-			i1++;
-		if (world.isAirBlock(i + 1, j, k))
-			i1++;
-		if (world.isAirBlock(i, j, k - 1))
-			i1++;
-		if (world.isAirBlock(i, j, k + 1))
-			i1++;
+		for (ForgeDirection dir : Global.SIDES) {
+			if (isRawStone(world, i + dir.offsetX, j + dir.offsetY, k + dir.offsetZ)) l++;
+			else if (world.isAirBlock(i + dir.offsetX, j + dir.offsetY, k + dir.offsetZ)) i1++;
+		}
 
 		if (l == 3 && i1 == 1)
 		{

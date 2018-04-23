@@ -17,18 +17,23 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Blocks.BlockTerra;
+import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.Items.Tools.ItemHammer;
+import com.bioxx.tfc.api.Blocks.IBlockStoneType;
+import com.bioxx.tfc.api.Blocks.StoneType;
 import com.bioxx.tfc.api.Tools.IToolChisel;
 
-public class BlockSmooth extends BlockTerra
+public class BlockSmooth extends BlockTerra implements IBlockStoneType
 {
-	protected BlockSmooth(Material material)
+	protected BlockSmooth(StoneType stoneType)
 	{
-		super(material);
+		super(Material.rock);
+		setCreativeTab(TFCTabs.TFC_BUILDING);
+		this.stoneType = stoneType;
 	}
 
-	protected String[] names;
-	protected IIcon[] icons;
+	public final StoneType stoneType;
+	protected IIcon[] icons = new IIcon[8];
 
 	@SideOnly(Side.CLIENT)
 	@Override
@@ -37,8 +42,7 @@ public class BlockSmooth extends BlockTerra
 	 */
 	public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List list)
 	{
-		for(int i = 0; i < names.length; i++)
-			list.add(new ItemStack(this,1,i));
+		stoneType.getVariants().forEach(sv -> list.add(new ItemStack(this, 1, sv.getLocalIndex())));
 	}
 
 	/*
@@ -61,8 +65,7 @@ public class BlockSmooth extends BlockTerra
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegisterer)
 	{
-		for(int i = 0; i < names.length; i++)
-			icons[i] = iconRegisterer.registerIcon(Reference.MOD_ID + ":" + "rocks/"+names[i]+" Smooth");
+		stoneType.getVariants().forEach(sv -> {icons[sv.getLocalIndex()] = iconRegisterer.registerIcon(Reference.MOD_ID + ":" + "rocks/"+sv.getName()+" Smooth");});
 	}
 
 	/**
@@ -85,5 +88,10 @@ public class BlockSmooth extends BlockTerra
 			return ((IToolChisel)entityplayer.getCurrentEquippedItem().getItem()).onUsed(world, entityplayer, x, y, z, id, meta, side, par7, par8, par9);
 		}
 		return false;
+	}
+
+	@Override
+	public StoneType getStoneType() {
+		return stoneType;
 	}
 }
