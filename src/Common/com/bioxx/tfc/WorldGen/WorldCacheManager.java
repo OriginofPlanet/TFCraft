@@ -71,11 +71,11 @@ public class WorldCacheManager
 	};
 
 	@Deprecated
-	public static final DataLayer[] ROCK_LAYER_1 = ROCK_LAYERS[1];
+	public static final DataLayer[] ROCK_LAYER_1 = ROCK_LAYERS[0];
 	@Deprecated
-	public static final DataLayer[] ROCK_LAYER_2 = ROCK_LAYERS[2];
+	public static final DataLayer[] ROCK_LAYER_2 = ROCK_LAYERS[1];
 	@Deprecated
-	public static final DataLayer[] ROCK_LAYER_3 = ROCK_LAYERS[3];
+	public static final DataLayer[] ROCK_LAYER_3 = ROCK_LAYERS[2];
 
 	public static final int ROCK_LAYER_COUNT = ROCK_LAYERS.length;
 	/**
